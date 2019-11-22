@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:27:52 by artprevo          #+#    #+#             */
-/*   Updated: 2019/10/26 17:10:49 by artprevo         ###   ########.fr       */
+/*   Updated: 2019/11/22 16:58:11 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define LEMMIN_H
 
 # include "libft.h"
-# include "get_next_line.h"
 
+# define BUFFER_SIZE	10000
 # define SHIFT_MIN		32
 # define TRUE			1
 # define FALSE 			0
@@ -53,14 +53,6 @@ typedef	struct			s_env
 	int					parsing_state;
 }						t_env;
 
-typedef struct			s_path
-{
-	char				**pathing;
-	size_t				steps;
-	size_t				ants;
-	struct s_path		*next;
-	struct s_path		*prev;
-}						t_path;
 
 typedef struct			s_tab
 {
@@ -89,6 +81,15 @@ typedef struct			s_pipe
 	struct s_pipe		*prev;
 }						t_pipe;
 
+typedef struct			s_path
+{
+	char				**pathing;
+	size_t				id;
+	size_t				steps;
+	size_t				ants;
+	struct s_path		*next;
+	struct s_path		*prev;
+}						t_path;
 
 // main.c
 int						processparsing(t_env *env);
@@ -105,7 +106,7 @@ t_env					*processinit(void);
 // init_tools.c
 t_room					*create_room(t_env *env);
 t_pipe					*create_pipe(t_env *env);
-t_path					*create_path(t_env *env);
+t_path					*create_path(t_env *env, size_t steps, char **pathing);
 
 // tab.c
 void 					maketab(t_env *env);

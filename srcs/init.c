@@ -66,7 +66,7 @@ static t_env		*ft_initenv(void)
 	new->pipe = NULL;
 	new->path = NULL;
 	new->tab = NULL;
-	new->nb_path = 0;
+	new->nb_path = 1;
 	new->ants = 0;
 	new->parsing_state = -1;
 	return (new);
