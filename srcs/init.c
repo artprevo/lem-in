@@ -53,6 +53,22 @@ t_room			*initroom(void)
 	new->name = NULL;
 	new->next = NULL;
 	new->prev = NULL;
+
+	return (new);
+}
+
+t_family			*initfamily(t_room *room)
+{
+	t_family	*new;
+
+	if (!(new = (t_family *)malloc(sizeof(t_family))))
+		return (NULL);
+	new->state = room->state;
+	new->name = room->name;
+	new->child = NULL;
+	new->parent = NULL;
+	new->bro = NULL;
+	new->origin = room;
 	return (new);
 }
 
@@ -62,10 +78,11 @@ static t_env		*ft_initenv(void)
 
 	if (!(new = (t_env *)malloc(sizeof(t_env))))
 		return (NULL);
-	new->room = NULL;
+	new->family = NULL;
 	new->pipe = NULL;
 	new->path = NULL;
 	new->tab = NULL;
+	new->room = NULL;
 	new->nb_path = 1;
 	new->ants = 0;
 	new->parsing_state = -1;

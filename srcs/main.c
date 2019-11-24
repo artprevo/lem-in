@@ -12,8 +12,10 @@ int					processparsing(t_env *env)
 	    free(line);
     }
     maketab(env);
-    if (path(env) == FAILURE)
-        return (FAILURE);
+	if (family(env) == FAILURE)
+		return (FAILURE);
+    // if (path(env) == FAILURE)
+    //     return (FAILURE);
     return (SUCCESS);
 }
 

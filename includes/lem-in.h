@@ -48,6 +48,7 @@ typedef	struct			s_env
 	struct s_pipe		*pipe;
 	struct s_tab		*tab;
 	struct s_path		*path;
+	struct s_family		*family;
 	size_t				nb_path;
 	size_t				ants;
 	int					parsing_state;
@@ -71,6 +72,16 @@ typedef	struct			s_room
 	struct s_room		*next;
 	struct s_room 		*prev;
 }						t_room;
+
+typedef struct			s_family
+{
+	size_t				state;
+	char				*name;
+	struct s_family		*child;
+	struct s_family		*bro;
+	struct s_family		*parent;
+	struct s_room		*origin;
+}						t_family;
 
 typedef struct			s_pipe
 {
@@ -102,11 +113,13 @@ t_path					*initpath(void);
 t_pipe					*initpipe(void);
 t_room					*initroom(void);
 t_env					*processinit(void);
+t_family				*initfamily(t_room *room);
 
 // init_tools.c
 t_room					*create_room(t_env *env);
 t_pipe					*create_pipe(t_env *env);
 t_path					*create_path(t_env *env, size_t steps, char **pathing);
+
 
 // tab.c
 void 					maketab(t_env *env);
@@ -129,6 +142,9 @@ void 					printroom(t_room *room);
 void 					printmap(char **map);
 
 // path.c
-int						path(t_env *env);
+// int						path(t_env *env);
+
+// family.c
+int						family(t_env *env);
 
 #endif
