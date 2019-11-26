@@ -24,6 +24,7 @@ int   main(void)
     env = processinit();
     if (processparsing(env) == SUCCESS)
         printf("ants = %lu\n", env->ants);
+	select_answer(env);
     tafreetatoucompri(env);
     return (0);
 }

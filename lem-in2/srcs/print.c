@@ -62,13 +62,13 @@ void 		printpath(t_env *env)
 	path = env->path;
 	while (path)
 	{
-		printf("steps = %zu\n", path->steps);
 		ways = path->ways;
 		while (ways)
 		{
 			printf("%zu || ", ways->id);
 			ways = ways->next;
 		}
+		printf("steps = %zu\n", path->steps);
 		path = path->next;
 	}
 }

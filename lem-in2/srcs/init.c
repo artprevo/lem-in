@@ -72,6 +72,7 @@ t_ways				*initways(size_t id)
 
 	if (!(new = (t_ways *)malloc(sizeof(t_ways))))
 		return (NULL);
+	new->ants = 0;
 	new->id = id;
 	new->next = NULL;
 	return (new);
@@ -85,5 +86,6 @@ t_path				*initpath(void)
 		return (NULL);
 	new->ways = NULL;
 	new->next = NULL;
+	new->usable = FALSE;
 	return (new);
 }

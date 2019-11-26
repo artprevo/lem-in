@@ -58,10 +58,12 @@ typedef struct			s_path
 	struct s_ways		*ways;
 	struct s_path		*next;
 	size_t				steps;
+	size_t				usable;
 }						t_path;
 
 typedef struct			s_ways
 {
+	size_t				ants;
 	size_t				id;
 	struct s_ways		*next;
 }						t_ways;
@@ -121,5 +123,7 @@ void 					printpipe(t_env *env);
 void 					printroom(t_env *env);
 void 					printmatrice(t_env *env);
 void 					printpath(t_env *env);
+
+int						select_answer(t_env *env);
 
 #endif

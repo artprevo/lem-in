@@ -22,7 +22,9 @@ static int		fill_ways(t_env *env, t_path *path, size_t **matrice)
 {
 	size_t	i;
 	size_t	j;
+	size_t	steps;
 
+	steps = 0;
 	if (!(create_ways(path, 0)))
 		return (FAILURE);
 	i = 0;
@@ -33,20 +35,21 @@ static int		fill_ways(t_env *env, t_path *path, size_t **matrice)
 		{
 			if (matrice[i][j] == 2)
 			{
+				steps++;
 				if (!(create_ways(path, j)))
 					return(FAILURE);
 				i = j;
 				j = -1;
-				// matrice[i][j] = 1;
 			}
 			j++;
 		}
 		i++;
 	}
+	path->steps = steps;
 	return (SUCCESS);
 }
 
-static int 		make_path(t_env *env, size_t steps)
+static int 		make_path(t_env *env)
 {
 	t_path	*path;
 	size_t	**matrice;
@@ -54,7 +57,6 @@ static int 		make_path(t_env *env, size_t steps)
 	if (!(path = create_path(env)))
 		return (FAILURE);
 	matrice = env->matrice;
-	path->steps = steps;
 	if (fill_ways(env, path, matrice) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
@@ -67,10 +69,8 @@ static size_t 		recursive(t_env *env, size_t **matrice, size_t i)
 	k = 0;
 	while (k <= env->idmax) //i est la ligne de la matrice sans solution et on va chercher grace a la colonne quelle est la derniere salle visitee
 	{
-		// printf("i = %zu || k = %zu || matrice[k][i] = %zu\n", i, k, matrice[k][i]);
 		if (matrice[k][i] == 2)
 		{
-			printf("i = %zu || k = %zu || matrice[k][i] = %zu\n", i, k, matrice[k][i]);
 			matrice[k][i] = 1;
 			if (matrice[k][env->idmax] == 1)
 				return (k);
@@ -85,12 +85,10 @@ static int			explore_matrice(t_env *env)
 {
 	size_t	i;
 	size_t	j;
-	size_t	steps;
 	size_t	**matrice;
 
 	i = 0;
 	j = 0;
-	steps = 1;
 	matrice = env->matrice;
 	while (j <= env->idmax)
 	{
@@ -99,17 +97,13 @@ static int			explore_matrice(t_env *env)
 		if (matrice[i][j] == 1 && (did_not_pass(env, matrice[j]) == TRUE))
 		{
 			matrice[i][j] = 2;
-			steps++;
 			if (j == env->idmax)
 			{
-				printmatrice(env);
-				if (make_path(env, steps) == FAILURE)
+				if (make_path(env) == FAILURE)
 					return (FAILURE);
-				printf("path cree\n");
 				i = recursive(env, matrice, env->idmax);
 				j = i;
 				i = recursive(env, matrice, i);
-				steps -= 2;
 			}
 			else if (i != env->idmax)
 			{
@@ -119,16 +113,13 @@ static int			explore_matrice(t_env *env)
 		}
 		else if (j == env->idmax && i != env->idmax)
 		{
-			steps--;
 			j = i;
 			i = recursive(env, matrice, i);
-			// printf("i = %zu\n", i);
 		}
 		j++;
 		if (j >= env->idmax && i == 0)
 			return (SUCCESS);
 	}
-	printmatrice(env);
 	return (SUCCESS);
 }
 
@@ -156,10 +147,8 @@ int			set_matrice(t_env *env)
 		pipe = pipe->next;
 	}
 	env->matrice = matrice;
-	printmatrice(env);
 	if (explore_matrice(env) == FAILURE)
 		return (FAILURE);
-	printmatrice(env);
 	printpath(env);
 	return (SUCCESS);
 }
