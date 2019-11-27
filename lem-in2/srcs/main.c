@@ -17,14 +17,19 @@ int					processparsing(t_env *env)
     return (SUCCESS);
 }
 
-int   main(void)
+static int			processtreatment(t_env *env)
+{
+	if (find_turns(env) == FAILURE)
+		return (FAILURE);
+	return (SUCCESS);
+}
+int					main(void)
 {
     t_env *env;
 
     env = processinit();
-    if (processparsing(env) == SUCCESS)
-        printf("ants = %lu\n", env->ants);
-	select_answer(env);
+    if (processparsing(env) == FAILURE|| processtreatment(env) == FAILURE)
+		printf("Erorr\n");
     tafreetatoucompri(env);
     return (0);
 }

@@ -51,6 +51,8 @@ typedef	struct			s_env
 	size_t				idmax;
 	size_t				ants;
 	int					parsing_state;
+	size_t				nb_paths_used;
+	size_t				turns;
 }						t_env;
 
 typedef struct			s_path
@@ -58,6 +60,7 @@ typedef struct			s_path
 	struct s_ways		*ways;
 	struct s_path		*next;
 	size_t				steps;
+	size_t				turns;
 	size_t				usable;
 }						t_path;
 
@@ -124,6 +127,6 @@ void 					printroom(t_env *env);
 void 					printmatrice(t_env *env);
 void 					printpath(t_env *env);
 
-int						select_answer(t_env *env);
+int						find_turns(t_env *env);
 
 #endif

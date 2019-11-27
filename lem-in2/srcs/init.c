@@ -55,6 +55,7 @@ static t_env		*ft_initenv(void)
 	new->ants = 0;
 	new->parsing_state = -1;
 	new->idmax = 0;
+	new->turns = 0;
 	return (new);
 }
 
@@ -86,6 +87,7 @@ t_path				*initpath(void)
 		return (NULL);
 	new->ways = NULL;
 	new->next = NULL;
+	new->turns = 0;
 	new->usable = FALSE;
 	return (new);
 }
