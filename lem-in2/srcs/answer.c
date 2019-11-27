@@ -93,6 +93,11 @@ int			find_turns(t_env *env)
 	return (SUCCESS);
 }
 
+Faire une size_t **matrice des combos de chemin chemins, verifier leur compatibilites, calculer le nb
+de tours en fction des ants, parcourir.
+[0][j] = chemin 0 avec chemin j, si compatible (pas de salle en commun);
+tant que pas arriver au bout de la derniere ligne, faire une recursive pour trouvers tous les combos de chemins
+possibles.
 // static int			find_turns2(t_env *env)
 // {
 // 	t_path	*path;
