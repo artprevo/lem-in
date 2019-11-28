@@ -13,7 +13,7 @@
 NAME = lem-in
 CC = clang
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address
-SRCS = main.c init.c init_tools.c print.c parsing.c freeall.c tab.c utility.c pipe.c family.c
+SRCS = main.c init.c init_tools.c print.c parsing.c freeall.c utility.c setup_id.c matrice.c answer.c
 
 OBJS_PATH = objs/
 SRCS_PATH = srcs/

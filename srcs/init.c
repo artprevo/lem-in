@@ -12,20 +12,6 @@
 
 #include "lem-in.h"
 
-t_path			*initpath(void)
-{
-	t_path		*new;
-
-	if (!(new = (t_path *)malloc(sizeof(t_path))))
-		return (NULL);
-	new->pathing = NULL;
-	new->steps = 0;
-	new->ants = 0;
-	new->next = NULL;
-	new->prev = NULL;
-	return (new);
-}
-
 t_pipe			*initpipe(void)
 {
 	t_pipe		*new;
@@ -35,40 +21,24 @@ t_pipe			*initpipe(void)
 	new->used = FALSE;
 	new->a = NULL;
 	new->b = NULL;
+	new->ida = 0;
+	new->idb = 0;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
 }
 
-t_room			*initroom(void)
+t_room				*initroom(void)
 {
 	t_room	*new;
 
 	if (!(new = (t_room *)malloc(sizeof(t_room))))
 		return (NULL);
-	new->used = FALSE;
-	new->x = 0;
-	new->y = 0;
 	new->state = 0;
+	new->id = 0;
 	new->name = NULL;
 	new->next = NULL;
 	new->prev = NULL;
-
-	return (new);
-}
-
-t_family			*initfamily(t_room *room)
-{
-	t_family	*new;
-
-	if (!(new = (t_family *)malloc(sizeof(t_family))))
-		return (NULL);
-	new->state = room->state;
-	new->name = room->name;
-	new->child = NULL;
-	new->parent = NULL;
-	new->bro = NULL;
-	new->origin = room;
 	return (new);
 }
 
@@ -78,14 +48,14 @@ static t_env		*ft_initenv(void)
 
 	if (!(new = (t_env *)malloc(sizeof(t_env))))
 		return (NULL);
-	new->family = NULL;
+	new->matrice = NULL;
 	new->pipe = NULL;
-	new->path = NULL;
-	new->tab = NULL;
 	new->room = NULL;
-	new->nb_path = 1;
+	new->path = NULL;
 	new->ants = 0;
 	new->parsing_state = -1;
+	new->idmax = 0;
+	new->turns = 0;
 	return (new);
 }
 
@@ -94,5 +64,30 @@ t_env				*processinit(void)
 	t_env	*new;
 
 	new = ft_initenv();
+	return (new);
+}
+
+t_ways				*initways(size_t id)
+{
+	t_ways	*new;
+
+	if (!(new = (t_ways *)malloc(sizeof(t_ways))))
+		return (NULL);
+	new->ants = 0;
+	new->id = id;
+	new->next = NULL;
+	return (new);
+}
+
+t_path				*initpath(void)
+{
+	t_path	*new;
+
+	if (!(new = (t_path *)malloc(sizeof(t_path))))
+		return (NULL);
+	new->ways = NULL;
+	new->next = NULL;
+	new->turns = 0;
+	new->usable = FALSE;
 	return (new);
 }

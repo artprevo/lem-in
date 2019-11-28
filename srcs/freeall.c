@@ -51,11 +51,6 @@ static	void	freeroom(t_env *env)
 
 void			tafreetatoucompri(t_env *env)
 {
-	if (env->tab)
-	{
-		free(env->tab->map);
-		free(env->tab);
-	}
 	freepipe(env);
 	freeroom(env);
 	free(env);

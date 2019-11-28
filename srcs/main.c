@@ -11,21 +11,25 @@ int					processparsing(t_env *env)
             return (FAILURE);
 	    free(line);
     }
-    maketab(env);
-	if (family(env) == FAILURE)
+	put_id_room(env);
+	if (set_matrice(env) == FAILURE)
 		return (FAILURE);
-    // if (path(env) == FAILURE)
-    //     return (FAILURE);
     return (SUCCESS);
 }
 
-int   main(void)
+static int			processtreatment(t_env *env)
+{
+	if (find_turns(env) == FAILURE)
+		return (FAILURE);
+	return (SUCCESS);
+}
+int					main(void)
 {
     t_env *env;
 
     env = processinit();
-    if (processparsing(env) == SUCCESS)
-        printf("ants = %lu\n", env->ants);
+    if (processparsing(env) == FAILURE|| processtreatment(env) == FAILURE)
+		printf("Erorr\n");
     tafreetatoucompri(env);
     return (0);
 }

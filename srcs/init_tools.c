@@ -58,7 +58,7 @@ t_pipe			*create_pipe(t_env *env)
 	return (new);
 }
 
-t_path			*create_path(t_env *env, size_t steps, char **pathing)
+t_path			*create_path(t_env *env)
 {
 	t_path	*new;
 	t_path	*tmp;
@@ -66,9 +66,6 @@ t_path			*create_path(t_env *env, size_t steps, char **pathing)
 	if (env->path == NULL)
 	{
 		new = initpath();
-		new->steps = steps;
-		new->pathing = pathing;
-		new->id = 0;
 		env->path = new;
 	}
 	else
@@ -78,10 +75,27 @@ t_path			*create_path(t_env *env, size_t steps, char **pathing)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new;
-		new->prev = tmp;
-		new->id = 0;
-		new->steps = steps;
-		new->pathing = pathing;
+		new->next = NULL;
+	}
+	return (new);
+}
+t_ways			*create_ways(t_path *path, size_t id)
+{
+	t_ways	*new;
+	t_ways	*tmp;
+
+	if (path->ways == NULL)
+	{
+		new = initways(id);
+		path->ways = new;
+	}
+	else
+	{
+		new = initways(id);
+		tmp = path->ways;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
 		new->next = NULL;
 	}
 	return (new);

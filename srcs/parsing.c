@@ -58,10 +58,6 @@ static int        fill_room(t_room *room, int type, char *line, int i)
     tmp[k] = '\0';
     if (type == NAME)
         room->name = ft_strdup(tmp);
-    if (type == XROOM)
-        room->x = ft_atoi(tmp);
-    if (type == YROOM)
-        room->y = ft_atoi(tmp);
     free(tmp);
     return (i);
 }

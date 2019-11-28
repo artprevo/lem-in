@@ -46,61 +46,50 @@ typedef	struct			s_env
 {
 	struct s_room 		*room;
 	struct s_pipe		*pipe;
-	struct s_tab		*tab;
 	struct s_path		*path;
-	struct s_family		*family;
-	size_t				nb_path;
+	size_t				**matrice;
+	size_t				idmax;
 	size_t				ants;
 	int					parsing_state;
+	size_t				nb_paths_used;
+	size_t				turns;
 }						t_env;
 
-
-typedef struct			s_tab
+typedef struct			s_path
 {
-	char				**map;
-	size_t				xmax;
-	size_t				ymax;
-}						t_tab;
+	struct s_ways		*ways;
+	struct s_path		*next;
+	size_t				steps;
+	size_t				turns;
+	size_t				usable;
+}						t_path;
+
+typedef struct			s_ways
+{
+	size_t				ants;
+	size_t				id;
+	struct s_ways		*next;
+}						t_ways;
 
 typedef	struct			s_room
 {
-	size_t				x;
-	size_t				y;
 	size_t				state;
-	size_t				used;
+	size_t				id;
 	char				*name;
 	struct s_room		*next;
 	struct s_room 		*prev;
 }						t_room;
-
-typedef struct			s_family
-{
-	size_t				state;
-	char				*name;
-	struct s_family		*child;
-	struct s_family		*bro;
-	struct s_family		*parent;
-	struct s_room		*origin;
-}						t_family;
 
 typedef struct			s_pipe
 {
 	size_t				used;
 	char				*a;
 	char				*b;
+	size_t				ida;
+	size_t				idb;
 	struct s_pipe		*next;
 	struct s_pipe		*prev;
 }						t_pipe;
-
-typedef struct			s_path
-{
-	char				**pathing;
-	size_t				id;
-	size_t				steps;
-	size_t				ants;
-	struct s_path		*next;
-	struct s_path		*prev;
-}						t_path;
 
 // main.c
 int						processparsing(t_env *env);
@@ -109,42 +98,35 @@ int						processparsing(t_env *env);
 int						checktype(t_env *env, char *line);
 
 // init.c
-t_path					*initpath(void);
 t_pipe					*initpipe(void);
 t_room					*initroom(void);
 t_env					*processinit(void);
-t_family				*initfamily(t_room *room);
+t_path					*initpath(void);
+t_ways					*initways(size_t id);
 
 // init_tools.c
 t_room					*create_room(t_env *env);
 t_pipe					*create_pipe(t_env *env);
-t_path					*create_path(t_env *env, size_t steps, char **pathing);
+t_ways					*create_ways(t_path *path, size_t id);
+t_path					*create_path(t_env *env);
 
+// setup_id.c
+void					put_id_room(t_env *env);
 
-// tab.c
-void 					maketab(t_env *env);
-
+// matrice.c
+int						set_matrice(t_env *env);
 // freeall.c
 void					tafreetatoucompri(t_env *env);
 
 // utility.c
 size_t					absolute(int i);
 
-// pathing.c
-// void       closest_path(t_pipe *pipe, size_t **pos, int i);
-
-// pipe.c
-// void            		connect_pipes(t_env *env);
-
 // print.c
-void 					printpipe(t_pipe *pipe);
-void 					printroom(t_room *room);
-void 					printmap(char **map);
+void 					printpipe(t_env *env);
+void 					printroom(t_env *env);
+void 					printmatrice(t_env *env);
+void 					printpath(t_env *env);
 
-// path.c
-// int						path(t_env *env);
-
-// family.c
-int						family(t_env *env);
+int						find_turns(t_env *env);
 
 #endif
