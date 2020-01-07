@@ -37,7 +37,15 @@ void 		printmatrice(t_env *env)
 
 	i = 0;
 	matrice = env->matrice;
-	printf("  01234567\n\n");
+	printf("  ");
+	while (i <= env->idmax)
+	{
+		printf("%zu", i);
+		i++;
+	}
+	i = 0;
+	printf("\n");
+	printf("\n");
 	while (i <= env->idmax)
 	{
 		j = 0;
@@ -53,6 +61,40 @@ void 		printmatrice(t_env *env)
 		i++;
 	}
 }
+
+void 		printmatrice2(t_env *env)
+{
+	size_t		i;
+	size_t		j;
+	size_t		**matrice;
+
+	i = 0;
+	matrice = env->answer_matrice;
+	printf("  ");
+	while (i <= env->path_idmax)
+	{
+		printf("%zu", i);
+		i++;
+	}
+	i = 0;
+	printf("\n");
+	printf("\n");
+	while (i <= env->path_idmax)
+	{
+		j = 0;
+		printf("%zu ", i);
+		while (j <= env->path_idmax)
+		{
+			if (matrice[i][j] != 1 && matrice[i][j] != 2 && matrice[i][j] != 3)
+				matrice[i][j] = 0;
+			printf("%zu", matrice[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+}
+
 
 void 		printpath(t_env *env)
 {

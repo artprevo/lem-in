@@ -21,8 +21,11 @@ static int			processtreatment(t_env *env)
 {
 	if (find_turns(env) == FAILURE)
 		return (FAILURE);
+	if (print_result(env) == FAILURE)
+		return (FAILURE);
 	return (SUCCESS);
 }
+
 int					main(void)
 {
     t_env *env;

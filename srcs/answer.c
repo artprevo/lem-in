@@ -1,38 +1,83 @@
 # include "lem-in.h"
 
-// static void 	print_answer(size_t ants, char *str)
-// {
-// 	ft_putchar('L');
-// 	ft_putnbr((int)ants);
-// 	ft_putchar('-');
-// 	ft_putstr(str);
-// }
+static int 		make_answer(t_env *env, size_t i, size_t k)
+{
+	t_answer	*answer;
+	size_t	**matrice;
+	size_t	*paths;
+	size_t	j;
+	t_path	*path;
 
-// static size_t	no_common_way(t_env *env, t_path *path, t_path *tmp)
-// {
-// 	t_ways	*ways;
-// 	t_ways	*tmp_ways;
-//
-// 	ways = path->ways;
-// 	while (ways)
-// 	{
-// 		while (ways->id == 0)
-// 			ways = ways->next;
-// 		tmp_ways = tmp->ways;
-// 		while (tmp_ways->id == 0)
-// 			tmp_ways = tmp_ways->next;
-// 		if (ways->id == env->idmax)
-// 			return (TRUE);
-// 		while (tmp_ways)
-// 		{
-// 			if (tmp_ways->id == ways->id)
-// 				return (FALSE);
-// 			tmp_ways = tmp_ways->next;
-// 		}
-// 		ways = ways->next;
-// 	}
-// 	return (TRUE);
-// }
+	if (!(answer = create_answer(env)))
+		return (FAILURE);
+	matrice = env->answer_matrice;
+	answer->nb_path = k + 1;
+	if (!(paths = (size_t *)malloc(sizeof(size_t) * (k + 2))))
+		return (FAILURE);
+	paths[0] = i;
+	j = 0;
+	k = 0;
+	while (j <= env->path_idmax)
+	{
+		if (matrice[i][j] == 1)
+			paths[++k] = j;
+		j++;
+	}
+	i = 0;
+	while (i < answer->nb_path)
+	{
+		path = env->path;
+		while (path->id != paths[i])
+			path = path->next;
+		answer->steps += path->steps;
+		i++;
+	}
+	if (env->steps == 0 || answer->steps < env->steps)
+	{
+		env->steps = answer->steps;
+		answer->best = 1;
+	}
+	answer->path = paths;
+	i = 0;
+	while (i < answer->nb_path)
+	{
+		printf("path id = %zu\n", paths[i]);
+		i++;
+	}
+	printf("answer->steps = %zu || ", answer->steps);
+	printf("answer->nb_path = %zu || ", answer->nb_path);
+	printf("answer->best = %zu\n", answer->best);
+	return (SUCCESS);
+}
+
+static int		explore_answer_matrice(t_env *env)
+{
+	size_t		**matrice;
+	size_t		i;
+	size_t		j;
+	size_t		k;
+
+	matrice = env->answer_matrice;
+	i = 0;
+	while (i <= env->path_idmax)
+	{
+		j = 0;
+		k = 0;
+		while (j <= env->path_idmax)
+		{
+			if (matrice[i][j] == 1)
+				k++;
+			j++;
+		}
+		if (k != 0)
+		{
+			if (make_answer(env, i, k) == FAILURE)
+				return (FAILURE);
+		}
+		i++;
+	}
+	return(SUCCESS);
+}
 
 static void 	find_nb_path(t_env *env)
 {
@@ -59,69 +104,54 @@ static void 	find_nb_path(t_env *env)
 		j++;
 	}
 	env->nb_paths_used = (i <= nb_paths_used ? i : nb_paths_used);
+	printmatrice(env);
+	printf("nb path max = %zu\n", env->nb_paths_used);
+}
+
+static	void 	set_resolution(t_env *env)
+{
+	t_path	*path;
+	t_path	*tmp;
+	t_answer *answer;
+
+	path = env->path;
+	while (path)
+	{
+		if (!tmp || path->steps < tmp->steps)
+			tmp = path;
+		path = path->next;
+	}
+	// printf("id path = %zu || steps = %zu\n", tmp->id, tmp->steps);
+	answer = env->answer;
+	while (answer)
+	{
+		if (answer->best == 1)
+			break ;
+		answer = answer->next;
+	}
+	if ((tmp->steps + env->ants) < (((answer->steps / answer->nb_path) + (answer->steps % answer->nb_path)) + (env->ants / answer->nb_path + env->ants % answer->nb_path)))
+	{
+		env->steps = (tmp->steps + env->ants);
+		env->resolution = STRAIGHT;
+	}
+	else
+	{
+		env->steps = (((answer->steps / answer->nb_path) + (answer->steps % answer->nb_path)) + (env->ants / answer->nb_path + env->ants % answer->nb_path));
+		env->resolution = MULTIPATH;
+		env->answer = answer;
+	}
+	printf("straight = %zu\n", (tmp->steps + env->ants));
+	printf("multipath = %zu\n", (((answer->steps / answer->nb_path) + (answer->steps % answer->nb_path)) + (env->ants / answer->nb_path + env->ants % answer->nb_path)));
+ 	printf("resolution = %zu\n", env->resolution);
 }
 
 int			find_turns(t_env *env)
 {
-	t_path	*path;
-	t_path	*tmp;
-	size_t	nb_paths_used;
-
 	find_nb_path(env);
-	path = env->path;
-	while (path)
-	{
-		nb_paths_used = 0;
-		tmp = env->path;
-		while (tmp)
-		{
-			if (env->ants > tmp->steps && path->steps <= tmp->steps)
-				nb_paths_used++;
-			tmp = tmp->next;
-		}
-		if (nb_paths_used == env->nb_paths_used)
-			printf("SOLUTION\nsteps = %zu\n", path->steps);
-		path = path->next;
-	}
-	path = env->path;
-	while (path)
-	{
-		if (path->usable == TRUE)
-			printf("path->steps = %zu\n", path->steps);
-		path = path->next;
-	}
+	put_id_path(env);
+	set_answer_matrice(env);
+	if (explore_answer_matrice(env) == FAILURE)
+		return (FAILURE);
+	set_resolution(env);
 	return (SUCCESS);
 }
-
-/*Faire une size_t **matrice des combos de chemin chemins, verifier leur compatibilites, calculer le nb
-de tours en fction des ants, parcourir.
-[0][j] = chemin 0 avec chemin j, si compatible (pas de salle en commun);
-tant que pas arriver au bout de la derniere ligne, faire une recursive pour trouvers tous les combos de chemins
-possibles.*/
-// static int			find_turns2(t_env *env)
-// {
-// 	t_path	*path;
-// 	t_path	*tmp;
-// 	size_t	min_steps;
-// 	size_t	same_steps;
-//
-// 	min_steps = 0;
-// 	path = env->path;
-// 	while (path)
-// 	{
-// 		same_steps = 1;
-// 		min_steps = path->steps;
-// 		tmp = env->path;
-// 		while (tmp)
-// 		{
-// 			if (tmp->steps == min_steps && no_common_way(env, path, tmp) == TRUE)
-// 				same_steps++;
-// 			tmp = tmp->next;
-// 		}
-// 		// path->turns = (min_steps) + (env->ants / same_steps) - 1;
-// 		if (env->turns == 0 || path->turns < env->turns)
-// 			env->turns = path->turns;
-// 		path = path->next;
-// 	}
-// 	return (SUCCESS);
-// }

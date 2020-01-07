@@ -49,13 +49,20 @@ static t_env		*ft_initenv(void)
 	if (!(new = (t_env *)malloc(sizeof(t_env))))
 		return (NULL);
 	new->matrice = NULL;
+	new->answer_matrice = NULL;
 	new->pipe = NULL;
 	new->room = NULL;
 	new->path = NULL;
+	new->answer = NULL;
+	new->ants_list = NULL;
 	new->ants = 0;
 	new->parsing_state = -1;
+	new->nb_paths_used = 0;
 	new->idmax = 0;
+	new->path_idmax = 0;
 	new->turns = 0;
+	new->steps = 0;
+	new->resolution = 0;
 	return (new);
 }
 
@@ -89,5 +96,32 @@ t_path				*initpath(void)
 	new->next = NULL;
 	new->turns = 0;
 	new->usable = FALSE;
+	return (new);
+}
+
+t_answer				*initanswer(void)
+{
+	t_answer	*new;
+
+	if (!(new = (t_answer *)malloc(sizeof(t_answer))))
+		return (NULL);
+	new->path = NULL;
+	new->best = 0;
+	new->nb_path = 0;
+	new->steps = 0;
+	new->next = NULL;
+	return (new);
+}
+
+t_ants				*initants(t_path *path, size_t id)
+{
+	t_ants	*new;
+
+	if (!(new = (t_ants *)malloc(sizeof(t_ants))))
+		return (NULL);
+	new->id = id;
+	new->path = path;
+	new->arrived = 0;
+	new->next = NULL;
 	return (new);
 }

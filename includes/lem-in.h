@@ -35,6 +35,9 @@
 # define A				0
 # define B				1
 
+# define STRAIGHT		1
+# define MULTIPATH		2
+
 // # define X				0
 // # define Y				1
 // # define UP				1
@@ -47,10 +50,16 @@ typedef	struct			s_env
 	struct s_room 		*room;
 	struct s_pipe		*pipe;
 	struct s_path		*path;
+	struct s_answer		*answer;
+	struct s_ants		*ants_list;
 	size_t				**matrice;
+	size_t				**answer_matrice;
 	size_t				idmax;
+	size_t				path_idmax;
+	size_t				steps;
 	size_t				ants;
 	int					parsing_state;
+	size_t				resolution;
 	size_t				nb_paths_used;
 	size_t				turns;
 }						t_env;
@@ -59,6 +68,7 @@ typedef struct			s_path
 {
 	struct s_ways		*ways;
 	struct s_path		*next;
+	size_t				id;
 	size_t				steps;
 	size_t				turns;
 	size_t				usable;
@@ -91,6 +101,23 @@ typedef struct			s_pipe
 	struct s_pipe		*prev;
 }						t_pipe;
 
+typedef struct			s_answer
+{
+	size_t				*path;
+	size_t				best;
+	size_t				nb_path;
+	size_t				steps;
+	struct s_answer		*next;
+}						t_answer;
+
+typedef struct			s_ants
+{
+	size_t				arrived;
+	size_t				id;
+	t_path				*path;
+	struct s_ants		*next;
+}						t_ants;
+
 // main.c
 int						processparsing(t_env *env);
 
@@ -103,29 +130,44 @@ t_room					*initroom(void);
 t_env					*processinit(void);
 t_path					*initpath(void);
 t_ways					*initways(size_t id);
+t_answer				*initanswer(void);
+t_ants					*initants(t_path *path, size_t id);
 
 // init_tools.c
 t_room					*create_room(t_env *env);
 t_pipe					*create_pipe(t_env *env);
 t_ways					*create_ways(t_path *path, size_t id);
 t_path					*create_path(t_env *env);
+t_answer				*create_answer(t_env *env);
+t_ants					*create_ants(t_env *env, t_path *path, size_t id);
 
 // setup_id.c
 void					put_id_room(t_env *env);
+void 					put_id_path(t_env *env);
+
 
 // matrice.c
 int						set_matrice(t_env *env);
+
+// answermatrice.c
+int						set_answer_matrice(t_env *env);
+t_path					*find_path(size_t i, t_env *env);
+
 // freeall.c
 void					tafreetatoucompri(t_env *env);
 
 // utility.c
 size_t					absolute(int i);
 
+// result.c
+int						print_result(t_env *env);
+
 // print.c
 void 					printpipe(t_env *env);
 void 					printroom(t_env *env);
 void 					printmatrice(t_env *env);
 void 					printpath(t_env *env);
+void 					printmatrice2(t_env *env);
 
 int						find_turns(t_env *env);
 

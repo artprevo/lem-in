@@ -53,6 +53,22 @@ static void 	put_id_pipe(t_env *env)
 	}
 }
 
+void 			put_id_path(t_env *env)
+{
+	t_path	*path;
+	size_t	i;
+
+	i = 0;
+	path = env->path;
+	while (path)
+	{
+		path->id = i;
+		path = path->next;
+		i++;
+	}
+	env->path_idmax = i - 1;
+}
+
 void			put_id_room(t_env *env)
 {
 	size_t	id;
