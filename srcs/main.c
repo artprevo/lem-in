@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/07 14:30:26 by artprevo          #+#    #+#             */
+/*   Updated: 2020/01/07 14:30:27 by artprevo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem-in.h"
 
 int					processparsing(t_env *env)
@@ -31,7 +43,7 @@ int					main(void)
     t_env *env;
 
     env = processinit();
-    if (processparsing(env) == FAILURE|| processtreatment(env) == FAILURE)
+    if (processparsing(env) == FAILURE || processtreatment(env) == FAILURE)
 		printf("Erorr\n");
     tafreetatoucompri(env);
     return (0);

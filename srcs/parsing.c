@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/07 14:30:37 by artprevo          #+#    #+#             */
+/*   Updated: 2020/01/07 14:30:37 by artprevo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem-in.h"
 
 static int        fill_pipe(t_pipe *pipe, int type, char *line, int i)
@@ -39,7 +51,6 @@ static void        parsing_pipe(t_env *env, char *line)
             i = fill_pipe(pipe, B, line, i + 1);
         type++;
     }
-    // printpipe(pipe);
 }
 
 static int        fill_room(t_room *room, int type, char *line, int i)
@@ -83,7 +94,6 @@ static void        parsing_room(t_env *env, char *line)
     }
     room->state = env->parsing_state;
     env->parsing_state = NORMAL;
-    // printroom(room);
 }
 
 int         checktype(t_env *env, char *line)

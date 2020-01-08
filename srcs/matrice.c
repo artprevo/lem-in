@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   matrice.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/07 14:30:31 by artprevo          #+#    #+#             */
+/*   Updated: 2020/01/07 14:30:32 by artprevo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "lem-in.h"
 
 static size_t		did_not_pass(t_env *env, size_t *line)
@@ -67,14 +79,12 @@ static size_t 		recursive(t_env *env, size_t **matrice, size_t i)
 	size_t	k;
 
 	k = 0;
-	while (k <= env->idmax) //i est la ligne de la matrice sans solution et on va chercher grace a la colonne quelle est la derniere salle visitee
+	while (k != env->idmax) //i est la ligne de la matrice sans solution et on va chercher grace a la colonne quelle est la derniere salle visitee
 	{
 		if (matrice[k][i] == 2)
 		{
 			matrice[k][i] = 1;
-			if (matrice[k][env->idmax] == 1)
-				return (k);
-			i = k;
+			return (k);
 		}
 		k++;
 	}
@@ -90,6 +100,7 @@ static int			explore_matrice(t_env *env)
 	i = 0;
 	j = 0;
 	matrice = env->matrice;
+	// printmatrice(env);
 	while (j <= env->idmax)
 	{
 		if (j == env->idmax && i == 0)
@@ -117,7 +128,7 @@ static int			explore_matrice(t_env *env)
 			i = recursive(env, matrice, i);
 		}
 		j++;
-		if (j >= env->idmax && i == 0)
+		if (j == env->idmax && i == 0)
 			return (SUCCESS);
 	}
 	return (SUCCESS);
@@ -149,6 +160,5 @@ int			set_matrice(t_env *env)
 	env->matrice = matrice;
 	if (explore_matrice(env) == FAILURE)
 		return (FAILURE);
-	printpath(env);
 	return (SUCCESS);
 }

@@ -1,35 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   setup_id.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/07 14:30:53 by artprevo          #+#    #+#             */
+/*   Updated: 2020/01/07 14:30:54 by artprevo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "lem-in.h"
-
-static void 	for_the_test(t_env *env)
-{
-	t_room		*room;
-
-	room = env->room;
-	while (room)
-	{
-		if (room->state != END && room->state != START)
-			room->id = ft_atoi(room->name);
-		room = room->next;
-	}
-}
-
-static void 	true_end(t_env *env)
-{
-	// size_t		tmp;
-	t_room		*room;
-	t_room		*end;
-
-	room = env->room;
-	end = env->room;
-	while (end->state != END)
-		end = end->next;
-	// while (room->id != env->idmax)
-	// 	room = room->next;
-	// tmp = end->id;
-	// end->id = room->id;
-	// room->id = tmp;
-	end->id = env->idmax;
-}
 
 static void 	put_id_pipe(t_env *env)
 {
@@ -78,8 +59,18 @@ void			put_id_room(t_env *env)
 	id = 1;
 	while (room)
 	{
+		id++;
+		room = room->next;
+	}
+	env->idmax = id - 2;
+	room = env->room;
+	id = 1;
+	while (room)
+	{
 		if (room->state == START)
 			room->id = 0;
+		else if (room->state == END)
+			room->id = env->idmax;
 		else
 		{
 			room->id = id;
@@ -87,10 +78,11 @@ void			put_id_room(t_env *env)
 		}
 		room = room->next;
 	}
-	env->idmax = id - 1;
-	true_end(env);
-	for_the_test(env);
 	put_id_pipe(env);
-	// printpipe(env);
-	// printroom(env);
+	// room = env->room;
+	// while (room)
+	// {
+	// 	printf("room id = %zu || room name = %s || state = %zu\n", room->id, room->name, room->state);
+	// 	room = room->next;
+	// }
 }

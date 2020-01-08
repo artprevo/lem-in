@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   answermatrice.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/07 14:30:03 by artprevo          #+#    #+#             */
+/*   Updated: 2020/01/07 14:30:13 by artprevo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "lem-in.h"
 
 // static size_t 		recursive(t_env *env, size_t **matrice, size_t i)
@@ -95,6 +107,5 @@ int			set_answer_matrice(t_env *env)
 	matrice[--i] = NULL;
 	env->answer_matrice = matrice;
 	fill_matrice(env);
-	printmatrice2(env);
 	return (SUCCESS);
 }

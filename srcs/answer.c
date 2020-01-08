@@ -1,12 +1,24 @@
-# include "lem-in.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   answer.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/07 14:29:53 by artprevo          #+#    #+#             */
+/*   Updated: 2020/01/07 14:29:56 by artprevo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static int 		make_answer(t_env *env, size_t i, size_t k)
+#include "lem-in.h"
+
+static int		make_answer(t_env *env, size_t i, size_t k)
 {
 	t_answer	*answer;
-	size_t	**matrice;
-	size_t	*paths;
-	size_t	j;
-	t_path	*path;
+	size_t		**matrice;
+	size_t		*paths;
+	size_t		j;
+	t_path		*path;
 
 	if (!(answer = create_answer(env)))
 		return (FAILURE);
@@ -40,13 +52,7 @@ static int 		make_answer(t_env *env, size_t i, size_t k)
 	answer->path = paths;
 	i = 0;
 	while (i < answer->nb_path)
-	{
-		printf("path id = %zu\n", paths[i]);
 		i++;
-	}
-	printf("answer->steps = %zu || ", answer->steps);
-	printf("answer->nb_path = %zu || ", answer->nb_path);
-	printf("answer->best = %zu\n", answer->best);
 	return (SUCCESS);
 }
 
@@ -79,12 +85,12 @@ static int		explore_answer_matrice(t_env *env)
 	return(SUCCESS);
 }
 
-static void 	find_nb_path(t_env *env)
+static void		find_nb_path(t_env *env)
 {
-	size_t	i;
-	size_t	j;
-	size_t	nb_paths_used;
-	size_t	**matrice;
+	size_t		i;
+	size_t		j;
+	size_t		nb_paths_used;
+	size_t		**matrice;
 
 	matrice = env->matrice;
 	nb_paths_used = 0;
@@ -103,49 +109,56 @@ static void 	find_nb_path(t_env *env)
 			nb_paths_used++;
 		j++;
 	}
+	// printf("i = %zu || nb_paths_used = %zu\n", i, nb_paths_used);
 	env->nb_paths_used = (i <= nb_paths_used ? i : nb_paths_used);
-	printmatrice(env);
-	printf("nb path max = %zu\n", env->nb_paths_used);
 }
 
-static	void 	set_resolution(t_env *env)
+static	void	set_resolution(t_env *env)
 {
-	t_path	*path;
-	t_path	*tmp;
-	t_answer *answer;
+	t_path		*path;
+	t_path		*tmp;
+	t_answer	*answer;
 
+	tmp = 0;
 	path = env->path;
 	while (path)
 	{
-		if (!tmp || path->steps < tmp->steps)
+		if (tmp == 0 || path->steps < tmp->steps)
 			tmp = path;
 		path = path->next;
 	}
-	// printf("id path = %zu || steps = %zu\n", tmp->id, tmp->steps);
-	answer = env->answer;
-	while (answer)
+	if (env->answer)
 	{
-		if (answer->best == 1)
-			break ;
-		answer = answer->next;
-	}
-	if ((tmp->steps + env->ants) < (((answer->steps / answer->nb_path) + (answer->steps % answer->nb_path)) + (env->ants / answer->nb_path + env->ants % answer->nb_path)))
-	{
-		env->steps = (tmp->steps + env->ants);
-		env->resolution = STRAIGHT;
+		answer = env->answer;
+		while (answer)
+		{
+			if (answer->best == 1)
+				break ;
+			answer = answer->next;
+		}
+		if ((tmp->steps + env->ants) < (((answer->steps / answer->nb_path) + (answer->steps % answer->nb_path)) + (env->ants / answer->nb_path + env->ants % answer->nb_path)))
+		{
+			env->steps = (tmp->steps + env->ants);
+			env->resolution = STRAIGHT;
+		}
+		else
+		{
+			env->steps = (((answer->steps / answer->nb_path) + (answer->steps % answer->nb_path)) + (env->ants / answer->nb_path + env->ants % answer->nb_path));
+			env->resolution = MULTIPATH;
+			env->answer = answer;
+		}
+		// printf("straight = %zu\n", (tmp->steps + env->ants));
+		// printf("multipath = %zu\n", (((answer->steps / answer->nb_path) + (answer->steps % answer->nb_path)) + (env->ants / answer->nb_path + env->ants % answer->nb_path)));
+		// printf("resolution = %zu\n", env->resolution);
 	}
 	else
 	{
-		env->steps = (((answer->steps / answer->nb_path) + (answer->steps % answer->nb_path)) + (env->ants / answer->nb_path + env->ants % answer->nb_path));
-		env->resolution = MULTIPATH;
-		env->answer = answer;
+		env->resolution = STRAIGHT;
+		env->steps = (tmp->steps + env->ants);
 	}
-	printf("straight = %zu\n", (tmp->steps + env->ants));
-	printf("multipath = %zu\n", (((answer->steps / answer->nb_path) + (answer->steps % answer->nb_path)) + (env->ants / answer->nb_path + env->ants % answer->nb_path)));
- 	printf("resolution = %zu\n", env->resolution);
 }
 
-int			find_turns(t_env *env)
+int				find_turns(t_env *env)
 {
 	find_nb_path(env);
 	put_id_path(env);
@@ -153,5 +166,12 @@ int			find_turns(t_env *env)
 	if (explore_answer_matrice(env) == FAILURE)
 		return (FAILURE);
 	set_resolution(env);
+	// t_answer	*answer = env->answer;
+	// while (answer)
+	// {
+	// 	printf("steps = %zu\n", answer->steps);
+	// 	printf("nb path = %zu\n", answer->nb_path);
+	// 	answer = answer->next;
+	// }
 	return (SUCCESS);
 }
