@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "lem-in.h"
+#include "lem-in.h"
 
-static size_t		did_not_pass(t_env *env, size_t *line)
+size_t		did_not_pass(t_env *env, size_t *line)
 {
 	size_t i;
 	size_t k;
@@ -30,13 +30,11 @@ static size_t		did_not_pass(t_env *env, size_t *line)
 	return (TRUE);
 }
 
-static int		fill_ways(t_env *env, t_path *path, size_t **matrice)
+int			fill_ways(t_env *env, t_path *path, size_t **matrice, size_t steps)
 {
 	size_t	i;
 	size_t	j;
-	size_t	steps;
 
-	steps = 0;
 	if (!(create_ways(path, 0)))
 		return (FAILURE);
 	i = 0;
@@ -49,7 +47,7 @@ static int		fill_ways(t_env *env, t_path *path, size_t **matrice)
 			{
 				steps++;
 				if (!(create_ways(path, j)))
-					return(FAILURE);
+					return (FAILURE);
 				i = j;
 				j = -1;
 			}
@@ -61,7 +59,7 @@ static int		fill_ways(t_env *env, t_path *path, size_t **matrice)
 	return (SUCCESS);
 }
 
-static int 		make_path(t_env *env)
+int			make_path(t_env *env)
 {
 	t_path	*path;
 	size_t	**matrice;
@@ -69,17 +67,17 @@ static int 		make_path(t_env *env)
 	if (!(path = create_path(env)))
 		return (FAILURE);
 	matrice = env->matrice;
-	if (fill_ways(env, path, matrice) == FAILURE)
+	if (fill_ways(env, path, matrice, 0) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }
 
-static size_t 		recursive(t_env *env, size_t **matrice, size_t i)
+size_t		recursive(t_env *env, size_t **matrice, size_t i)
 {
 	size_t	k;
 
 	k = 0;
-	while (k != env->idmax) //i est la ligne de la matrice sans solution et on va chercher grace a la colonne quelle est la derniere salle visitee
+	while (k != env->idmax)
 	{
 		if (matrice[k][i] == 2)
 		{
@@ -89,49 +87,6 @@ static size_t 		recursive(t_env *env, size_t **matrice, size_t i)
 		k++;
 	}
 	return (i);
-}
-
-static int			explore_matrice(t_env *env)
-{
-	size_t	i;
-	size_t	j;
-	size_t	**matrice;
-
-	i = 0;
-	j = 0;
-	matrice = env->matrice;
-	// printmatrice(env);
-	while (j <= env->idmax)
-	{
-		if (j == env->idmax && i == 0)
-			return (SUCCESS);
-		if (matrice[i][j] == 1 && (did_not_pass(env, matrice[j]) == TRUE))
-		{
-			matrice[i][j] = 2;
-			if (j == env->idmax)
-			{
-				if (make_path(env) == FAILURE)
-					return (FAILURE);
-				i = recursive(env, matrice, env->idmax);
-				j = i;
-				i = recursive(env, matrice, i);
-			}
-			else if (i != env->idmax)
-			{
-				i = j;
-				j = -1;
-			}
-		}
-		else if (j == env->idmax && i != env->idmax)
-		{
-			j = i;
-			i = recursive(env, matrice, i);
-		}
-		j++;
-		if (j == env->idmax && i == 0)
-			return (SUCCESS);
-	}
-	return (SUCCESS);
 }
 
 int			set_matrice(t_env *env)
@@ -158,7 +113,7 @@ int			set_matrice(t_env *env)
 		pipe = pipe->next;
 	}
 	env->matrice = matrice;
-	if (explore_matrice(env) == FAILURE)
+	if (explore_matrice(env, 0, 0, matrice) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }

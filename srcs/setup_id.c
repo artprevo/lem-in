@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "lem-in.h"
+#include "lem-in.h"
 
-static void 	put_id_pipe(t_env *env)
+static void		put_id_pipe(t_env *env)
 {
 	t_pipe	*pipe;
 	t_room	*room;
@@ -34,7 +34,7 @@ static void 	put_id_pipe(t_env *env)
 	}
 }
 
-void 			put_id_path(t_env *env)
+void			put_id_path(t_env *env)
 {
 	t_path	*path;
 	size_t	i;
@@ -50,13 +50,11 @@ void 			put_id_path(t_env *env)
 	env->path_idmax = i - 1;
 }
 
-void			put_id_room(t_env *env)
+void			put_id_room(t_env *env, size_t id)
 {
-	size_t	id;
 	t_room	*room;
 
 	room = env->room;
-	id = 1;
 	while (room)
 	{
 		id++;
@@ -79,10 +77,4 @@ void			put_id_room(t_env *env)
 		room = room->next;
 	}
 	put_id_pipe(env);
-	// room = env->room;
-	// while (room)
-	// {
-	// 	printf("room id = %zu || room name = %s || state = %zu\n", room->id, room->name, room->state);
-	// 	room = room->next;
-	// }
 }

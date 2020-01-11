@@ -12,9 +12,47 @@
 
 #include "lem-in.h"
 
-size_t     absolute(int i)
+size_t		absolute(int i)
 {
-    if (i < 0)
-        return (-i);
-    return (i);
+	if (i < 0)
+		return (-i);
+	return (i);
+}
+
+void		reso_calcul(t_env *env, t_path *tmp, t_answer *answer)
+{
+	if ((tmp->steps + env->ants) < (((answer->steps / answer->nb_path) +
+	(answer->steps % answer->nb_path)) +
+	(env->ants / answer->nb_path + env->ants % answer->nb_path)))
+	{
+		env->steps = (tmp->steps + env->ants);
+		env->resolution = STRAIGHT;
+	}
+	else
+	{
+		env->steps = (((answer->steps / answer->nb_path) +
+		(answer->steps % answer->nb_path)) +
+		(env->ants / answer->nb_path + env->ants % answer->nb_path));
+		env->resolution = MULTIPATH;
+		env->answer = answer;
+	}
+}
+
+size_t		*add_path(t_env *env, size_t **matrice, size_t k, size_t i)
+{
+	size_t		j;
+	size_t		*paths;
+
+	if (!(paths = (size_t *)malloc(sizeof(size_t) * (k + 2))))
+		return (NULL);
+	j = 0;
+	k = 0;
+	paths[0] = i;
+	while (j <= env->path_idmax)
+	{
+		if (matrice[i][j] == 1)
+			paths[++k] = j;
+		j++;
+	}
+	return (paths);
 }

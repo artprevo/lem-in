@@ -10,26 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "lem-in.h"
-
-// static size_t 		recursive(t_env *env, size_t **matrice, size_t i)
-// {
-// 	size_t	k;
-//
-// 	k = 0;
-// 	while (k <= env->path_idmax) //i est la ligne de la matrice sans solution et on va chercher grace a la colonne quelle est la derniere salle visitee
-// 	{
-// 		if (matrice[k][i] == 2)
-// 		{
-// 			matrice[k][i] = 1;
-// 			if (matrice[k][env->path_idmax] == 1)
-// 				return (k);
-// 			i = k;
-// 		}
-// 		k++;
-// 	}
-// 	return (i);
-// }
+#include "lem-in.h"
 
 static int			do_not_share(t_env *env, t_path *path, t_path *tmp)
 {
@@ -44,7 +25,8 @@ static int			do_not_share(t_env *env, t_path *path, t_path *tmp)
 		tmp_ways = tmp->ways;
 		while (tmp_ways)
 		{
-			if (tmp_ways->id == ways->id && ways->id != env->idmax && ways->id != 0)
+			if (tmp_ways->id == ways->id && ways->id != env->idmax &&
+			ways->id != 0)
 				return (FALSE);
 			tmp_ways = tmp_ways->next;
 		}
@@ -53,7 +35,7 @@ static int			do_not_share(t_env *env, t_path *path, t_path *tmp)
 	return (TRUE);
 }
 
-t_path		*find_path(size_t i, t_env *env)
+t_path				*find_path(size_t i, t_env *env)
 {
 	t_path	*path;
 
@@ -86,21 +68,23 @@ static void			fill_matrice(t_env *env)
 				matrice[i][j] = 0;
 			j++;
 		}
-	i++;
+		i++;
 	}
 }
 
-int			set_answer_matrice(t_env *env)
+int					set_answer_matrice(t_env *env)
 {
 	size_t	**matrice;
 	size_t	i;
 
-	if (!(matrice = (size_t **)malloc(sizeof(size_t *) * (env->path_idmax + 2))))
+	if (!(matrice = (size_t **)malloc(sizeof(size_t *) *
+	(env->path_idmax + 2))))
 		return (FAILURE);
 	i = 0;
 	while (i <= env->path_idmax + 1)
 	{
-		if (!(matrice[i] = (size_t *)malloc(sizeof(size_t) * (env->path_idmax + 1))))
+		if (!(matrice[i] = (size_t *)malloc(sizeof(size_t) *
+		(env->path_idmax + 1))))
 			return (FAILURE);
 		i++;
 	}

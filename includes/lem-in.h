@@ -142,12 +142,19 @@ t_answer				*create_answer(t_env *env);
 t_ants					*create_ants(t_env *env, t_path *path, size_t id);
 
 // setup_id.c
-void					put_id_room(t_env *env);
+void					put_id_room(t_env *env, size_t id);
 void 					put_id_path(t_env *env);
 
 
 // matrice.c
 int						set_matrice(t_env *env);
+size_t					recursive(t_env *env, size_t **matrice, size_t i);
+int						make_path(t_env *env);
+int						fill_ways(t_env *env, t_path *path, size_t **matrice, size_t steps);
+size_t					did_not_pass(t_env *env, size_t *line);
+
+// matrice2.c
+int						explore_matrice(t_env *env, size_t i, size_t j, size_t **matrice);
 
 // answermatrice.c
 int						set_answer_matrice(t_env *env);
@@ -158,9 +165,20 @@ void					tafreetatoucompri(t_env *env);
 
 // utility.c
 size_t					absolute(int i);
+void 					reso_calcul(t_env *env, t_path *tmp, t_answer *answer);
+size_t					*add_path(t_env *env, size_t **matrice,
+						size_t k, size_t i);
 
 // result.c
-int						print_result(t_env *env);
+int						print_result(t_env *env, size_t id);
+void					print_answer(t_env *env, size_t ants, size_t idroom);
+
+// result2.c
+t_ways					*mp_tool1(t_env *env, t_ways *ways, t_ants *ants, size_t space);
+t_ways					*mp_tool2(t_env *env, t_ways *ways, t_ants *ants, size_t space);
+t_ways					*mp_tool3(t_ants *ants);
+void 					mp_tool4(t_env *env);
+t_ants 					*mp_tool5(t_env *env, size_t *i, size_t *j);
 
 // print.c
 void 					printpipe(t_env *env);
