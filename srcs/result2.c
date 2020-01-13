@@ -50,7 +50,7 @@ t_ways		*mp_tool3(t_ants *ants)
 void		mp_tool4(t_env *env)
 {
 	env->turns++;
-	if (env->turns <= env->steps - 1)
+	if (env->wrote != 0)
 		ft_putchar('\n');
 }
 
@@ -60,6 +60,7 @@ t_ants		*mp_tool5(t_env *env, size_t *i, size_t *space)
 
 	*i = 0;
 	*space = 0;
+	env->wrote = 0;
 	ants = env->ants_list;
 	return (ants);
 }

@@ -62,6 +62,7 @@ typedef	struct			s_env
 	size_t				resolution;
 	size_t				nb_paths_used;
 	size_t				turns;
+	size_t				wrote;
 }						t_env;
 
 typedef struct			s_path
@@ -168,6 +169,7 @@ size_t					absolute(int i);
 void 					reso_calcul(t_env *env, t_path *tmp, t_answer *answer);
 size_t					*add_path(t_env *env, size_t **matrice,
 						size_t k, size_t i);
+t_path					*find_best_path(t_env *env);
 
 // result.c
 int						print_result(t_env *env, size_t id);

@@ -56,3 +56,19 @@ size_t		*add_path(t_env *env, size_t **matrice, size_t k, size_t i)
 	}
 	return (paths);
 }
+
+t_path		*find_best_path(t_env *env)
+{
+	t_path		*path;
+	t_path		*tmp;
+
+	path = env->path;
+	tmp = 0;
+	while (path)
+	{
+		if (!tmp || path->steps < tmp->steps)
+			tmp = path;
+		path = path->next;
+	}
+	return (tmp);
+}

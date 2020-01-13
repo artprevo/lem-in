@@ -99,25 +99,26 @@ static void		find_nb_path(t_env *env)
 
 static	void	set_resolution(t_env *env)
 {
-	t_path		*path;
 	t_path		*tmp;
 	t_answer	*answer;
 
-	path = env->path;
-	while (path)
+	tmp = find_best_path(env);
+	if (env->answer)
 	{
-		if (!tmp || path->steps < tmp->steps)
-			tmp = path;
-		path = path->next;
+		answer = env->answer;
+		while (answer)
+		{
+			if (answer->best == 1)
+				break ;
+			answer = answer->next;
+		}
+		reso_calcul(env, tmp, answer);
 	}
-	answer = env->answer;
-	while (answer)
+	else
 	{
-		if (answer->best == 1)
-			break ;
-		answer = answer->next;
+		env->resolution = STRAIGHT;
+		env->steps = (tmp->steps + env->ants);
 	}
-	reso_calcul(env, tmp, answer);
 }
 
 int				find_turns(t_env *env)

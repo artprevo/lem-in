@@ -58,6 +58,7 @@ static void		multipathing(t_env *env, size_t i, size_t space)
 		{
 			if (ants->arrived == 0)
 			{
+				env->wrote = 1;
 				ways = mp_tool3(ants);
 				if (ways->id != 0 && ways->id != env->idmax)
 					ways = mp_tool1(env, ways, ants, space);
