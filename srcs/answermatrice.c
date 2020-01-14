@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lemin.h"
 
 static int			do_not_share(t_env *env, t_path *path, t_path *tmp)
 {

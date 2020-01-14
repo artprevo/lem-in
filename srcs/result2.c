@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lemin.h"
 
 t_ways		*mp_tool1(t_env *env, t_ways *ways, t_ants *ants, size_t space)
 {
@@ -32,10 +32,12 @@ t_ways		*mp_tool2(t_env *env, t_ways *ways, t_ants *ants, size_t space)
 		ft_putstr(" ");
 	print_answer(env, ants->id, ways->id);
 	ways->ants = ants->id;
+	if (ways->id == env->idmax)
+		ants->arrived = 1;
 	return (ways);
 }
 
-t_ways		*mp_tool3(t_ants *ants)
+t_ways		*mp_tool3(t_env *env, t_ants *ants)
 {
 	t_ways *ways;
 
@@ -44,12 +46,12 @@ t_ways		*mp_tool3(t_ants *ants)
 		ways = ways->next;
 	if (!ways)
 		ways = ants->path->ways;
+	env = 0;
 	return (ways);
 }
 
 void		mp_tool4(t_env *env)
 {
-	env->turns++;
 	if (env->wrote != 0)
 		ft_putchar('\n');
 }

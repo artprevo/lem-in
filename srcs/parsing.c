@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lemin.h"
 
 static int		fill_pipe(t_pipe *pipe, int type, char *line, int i)
 {
@@ -98,29 +98,17 @@ static void		parsing_room(t_env *env, char *line)
 
 int				checktype(t_env *env, char *line)
 {
-	if (env->parsing_state == ANTS)
-	{
-		env->ants = ft_atoi(line);
-		env->parsing_state = NORMAL;
+	if (checktype2(env, line) == SUCCESS)
 		return (SUCCESS);
-	}
-	if (line[0] == '#' && line[1] == '#')
-	{
-		if (line[2] == 's')
-			env->parsing_state = START;
-		else if (line[2] == 'e')
-			env->parsing_state = END;
+	if (checklinerror(line) == TRUE)
 		return (SUCCESS);
-	}
-	if (strchr(line, '-') != FALSE)
-		env->parsing_state = PIPE;
-	if (env->parsing_state == NORMAL)
-		parsing_room(env, line);
-	if (env->parsing_state == START)
-		parsing_room(env, line);
-	if (env->parsing_state == END)
-		parsing_room(env, line);
-	if (env->parsing_state == PIPE)
+	if (ft_strchr(line, '-') != FALSE)
+	{
 		parsing_pipe(env, line);
+		return (SUCCESS);
+	}
+	if (env->parsing_state == NORMAL || env->parsing_state == START ||
+		env->parsing_state == END)
+		parsing_room(env, line);
 	return (SUCCESS);
 }

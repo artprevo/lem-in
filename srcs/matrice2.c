@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lemin.h"
 
 static int	scout_matrice(t_env *env, size_t **matrice, size_t *i, size_t *j)
 {
@@ -33,6 +33,9 @@ static int	scout_matrice(t_env *env, size_t **matrice, size_t *i, size_t *j)
 
 int			explore_matrice(t_env *env, size_t i, size_t j, size_t **matrice)
 {
+	size_t	z;
+
+	z = 0;
 	while (j <= env->idmax)
 	{
 		if (matrice[i][j] == 1 && (did_not_pass(env, matrice[j]) == TRUE))
@@ -46,7 +49,9 @@ int			explore_matrice(t_env *env, size_t i, size_t j, size_t **matrice)
 			i = recursive(env, matrice, i);
 		}
 		j++;
-		if (j == env->idmax && i == 0)
+		if (j == env->idmax && i == 0 && z > 0)
+			return (SUCCESS);
+		if (z++ > 1000000)
 			return (SUCCESS);
 	}
 	return (SUCCESS);

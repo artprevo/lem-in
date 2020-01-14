@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lemin.h"
 
 void			print_answer(t_env *env, size_t ants, size_t idroom)
 {
@@ -51,7 +51,7 @@ static void		multipathing(t_env *env, size_t i, size_t space)
 	t_ants		*ants;
 	t_ways		*ways;
 
-	while (env->turns <= env->steps - env->nb_paths_used)
+	while (everyone_not_arrived(env) == TRUE)
 	{
 		ants = mp_tool5(env, &i, &space);
 		while (ants && i < env->nb_paths_used)
@@ -59,7 +59,7 @@ static void		multipathing(t_env *env, size_t i, size_t space)
 			if (ants->arrived == 0)
 			{
 				env->wrote = 1;
-				ways = mp_tool3(ants);
+				ways = mp_tool3(env, ants);
 				if (ways->id != 0 && ways->id != env->idmax)
 					ways = mp_tool1(env, ways, ants, space);
 				else if (ways->id == 0 && ways->id != env->idmax)
@@ -85,6 +85,7 @@ int				print_result(t_env *env, size_t id)
 	{
 		while ((path->steps + env->ants) != env->steps)
 			path = path->next;
+		env->nb_paths_used = 1;
 		while (id <= env->ants)
 		{
 			ants = create_ants(env, path, id);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lemin.h"
 
 size_t		absolute(int i)
 {
@@ -71,4 +71,18 @@ t_path		*find_best_path(t_env *env)
 		path = path->next;
 	}
 	return (tmp);
+}
+
+int			everyone_not_arrived(t_env *env)
+{
+	t_ants *ants;
+
+	ants = env->ants_list;
+	while (ants)
+	{
+		if (ants->arrived == 0)
+			return (TRUE);
+		ants = ants->next;
+	}
+	return (FALSE);
 }

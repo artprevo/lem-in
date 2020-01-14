@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lemin.h"
 
 static int		make_answer(t_env *env, size_t i, size_t k)
 {
@@ -123,11 +123,26 @@ static	void	set_resolution(t_env *env)
 
 int				find_turns(t_env *env)
 {
+	size_t	j;
+	t_path	*path;
+
 	find_nb_path(env);
 	put_id_path(env);
-	set_answer_matrice(env);
-	if (explore_answer_matrice(env) == FAILURE)
+	if (!env->path)
 		return (FAILURE);
+	j = 0;
+	path = env->path;
+	while (path)
+	{
+		j++;
+		path = path->next;
+	}
+	if (j < 100)
+	{
+		set_answer_matrice(env);
+		if (explore_answer_matrice(env) == FAILURE)
+			return (FAILURE);
+	}
 	set_resolution(env);
 	return (SUCCESS);
 }

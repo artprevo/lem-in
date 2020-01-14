@@ -6,11 +6,11 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 14:30:26 by artprevo          #+#    #+#             */
-/*   Updated: 2020/01/13 20:29:59 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/01/13 21:21:22 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lemin.h"
 
 int					processparsing(t_env *env)
 {
@@ -23,6 +23,8 @@ int					processparsing(t_env *env)
 			return (FAILURE);
 		free(line);
 	}
+	if (checkerror(env) == FAILURE)
+		return (FAILURE);
 	put_id_room(env, 1);
 	if (set_matrice(env) == FAILURE)
 		return (FAILURE);
@@ -32,7 +34,10 @@ int					processparsing(t_env *env)
 static int			processtreatment(t_env *env)
 {
 	if (find_turns(env) == FAILURE)
+	{
+		printf("findturns\n");
 		return (FAILURE);
+	}
 	if (print_result(env, 1) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
@@ -44,7 +49,7 @@ int					main(void)
 
 	env = processinit();
 	if (processparsing(env) == FAILURE || processtreatment(env) == FAILURE)
-		printf("Erorr\n");
+		ft_putstr("ERROR\n");
 	tafreetatoucompri(env);
 	return (0);
 }
