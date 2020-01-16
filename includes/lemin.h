@@ -66,7 +66,6 @@ typedef struct			s_path
 	size_t				id;
 	size_t				steps;
 	size_t				turns;
-	size_t				usable;
 }						t_path;
 
 typedef struct			s_ways
@@ -87,7 +86,6 @@ typedef	struct			s_room
 
 typedef struct			s_pipe
 {
-	size_t				used;
 	char				*a;
 	char				*b;
 	size_t				ida;
@@ -169,17 +167,18 @@ t_ways					*mp_tool3(t_env *env, t_ants *ants);
 void					mp_tool4(t_env *env);
 t_ants					*mp_tool5(t_env *env, size_t *i, size_t *j);
 
-void					printpipe(t_env *env);
-void					printroom(t_env *env);
-void					printmatrice(t_env *env);
-void					printpath(t_env *env);
-void					printmatrice2(t_env *env);
-
 int						checkerror(t_env *env);
 int						checklinerror(char *line);
 
 int						checktype2(t_env *env, char *line);
 
 int						find_turns(t_env *env);
+void 					okazou(t_env *env);
+
+void					printpipe(t_env *env);
+void					printroom(t_env *env);
+void					printmatrice(t_env *env);
+void					printpath(t_env *env);
+void					printmatrice2(t_env *env);
 
 #endif

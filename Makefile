@@ -12,8 +12,8 @@
 
 NAME = lem-in
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
-SRCS = main.c init.c init_tools.c print.c parsing.c freeall.c utility.c \
+CFLAGS = -Wall -Wextra -Werror
+SRCS = main.c init.c init_tools.c parsing.c freeall.c utility.c print.c \
 setup_id.c matrice.c answer.c answermatrice.c result.c init2.c init_tools2.c \
 matrice2.c result2.c error.c parsing2.c
 

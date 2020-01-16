@@ -18,7 +18,6 @@ t_pipe				*initpipe(void)
 
 	if (!(new = (t_pipe *)malloc(sizeof(t_pipe))))
 		return (NULL);
-	new->used = FALSE;
 	new->a = NULL;
 	new->b = NULL;
 	new->ida = 0;

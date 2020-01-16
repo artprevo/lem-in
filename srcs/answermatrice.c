@@ -28,6 +28,8 @@ static int			do_not_share(t_env *env, t_path *path, t_path *tmp)
 			if (tmp_ways->id == ways->id && ways->id != env->idmax &&
 			ways->id != 0)
 				return (FALSE);
+			if ((ways->id == env->idmax || ways->id == 0) && path->steps == 1)
+				return (FALSE);
 			tmp_ways = tmp_ways->next;
 		}
 		ways = ways->next;

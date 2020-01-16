@@ -84,7 +84,9 @@ int				print_result(t_env *env, size_t id)
 	if (env->resolution == STRAIGHT)
 	{
 		while ((path->steps + env->ants) != env->steps)
+		{
 			path = path->next;
+		}
 		env->nb_paths_used = 1;
 		while (id <= env->ants)
 		{

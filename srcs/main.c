@@ -20,9 +20,19 @@ int					processparsing(t_env *env)
 	while (get_next_line(0, &line) == TRUE)
 	{
 		if (checktype(env, line) == FAILURE)
+		{
+			free(line);
 			return (FAILURE);
+		}
+		if (line != 0 && ft_strcmp(line, "\n") > 0)
+		{
+			ft_putstr(line);
+			ft_putchar('\n');
+		}
 		free(line);
 	}
+	free(line);
+	ft_putchar('\n');
 	if (checkerror(env) == FAILURE)
 		return (FAILURE);
 	put_id_room(env, 1);
@@ -33,11 +43,9 @@ int					processparsing(t_env *env)
 
 static int			processtreatment(t_env *env)
 {
+	okazou(env);
 	if (find_turns(env) == FAILURE)
-	{
-		printf("findturns\n");
 		return (FAILURE);
-	}
 	if (print_result(env, 1) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
@@ -48,8 +56,14 @@ int					main(void)
 	t_env *env;
 
 	env = processinit();
-	if (processparsing(env) == FAILURE || processtreatment(env) == FAILURE)
+	if (processparsing(env) == FAILURE)
+		ft_putstr("ERROR\n");
+	else if (processtreatment(env) == FAILURE)
 		ft_putstr("ERROR\n");
 	tafreetatoucompri(env);
+	while (1)
+	{
+
+	}
 	return (0);
 }

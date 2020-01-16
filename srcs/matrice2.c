@@ -12,6 +12,52 @@
 
 #include "lemin.h"
 
+static void clean_matrice(t_env *env, size_t **matrice)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i <= env->idmax)
+	{
+		j = 0;
+		while (j <= env->idmax)
+		{
+			if (matrice[i][j] == 2)
+				matrice[i][j] = 1;
+			j++;
+		}
+		i++;
+	}
+	env->matrice = matrice;
+}
+
+void 		okazou(t_env *env)
+{
+	size_t	**matrice;
+	size_t	j;
+
+	clean_matrice(env, env->matrice);
+	matrice = env->matrice;
+	if (matrice[0][env->idmax] == 1)
+	{
+		matrice[0][env->idmax] = 2;
+		make_path(env);
+		matrice[0][env->idmax] = 1;
+	}
+	j = 0;
+	while (j <= env->idmax)
+	{
+		if (matrice[0][j] == 1 && matrice[env->idmax][j] == 1)
+		{
+			matrice[0][j] = 2;
+			matrice[j][env->idmax] = 2;
+			make_path(env);
+		}
+		j++;
+	}
+}
+
 static int	scout_matrice(t_env *env, size_t **matrice, size_t *i, size_t *j)
 {
 	matrice[*i][*j] = 2;
@@ -49,9 +95,9 @@ int			explore_matrice(t_env *env, size_t i, size_t j, size_t **matrice)
 			i = recursive(env, matrice, i);
 		}
 		j++;
-		if (j == env->idmax && i == 0 && z > 0)
+		if (j == env->idmax && i == 0 && z > env->idmax)
 			return (SUCCESS);
-		if (z++ > 1000000)
+		if (z++ > 1000000 && env->path)
 			return (SUCCESS);
 	}
 	return (SUCCESS);

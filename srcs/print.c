@@ -12,6 +12,7 @@
 
 #include "lemin.h"
 
+
 void        printroom(t_env *env)
 {
 	t_room *room;

@@ -12,10 +12,26 @@
 
 #include "lemin.h"
 
+static int	checkants(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (ft_isdigit(line[i]) == 0)
+			return (FAILURE);
+		i++;
+	}
+	return (SUCCESS);
+}
+
 int			checktype2(t_env *env, char *line)
 {
 	if (env->parsing_state == ANTS)
 	{
+		if (checkants(line) == FAILURE)
+			return (FAILURE);
 		if (ft_atoi(line) <= 0)
 			return (FAILURE);
 		env->ants = ft_atoi(line);

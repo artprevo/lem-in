@@ -33,7 +33,6 @@ t_path				*initpath(void)
 	new->ways = NULL;
 	new->next = NULL;
 	new->turns = 0;
-	new->usable = FALSE;
 	return (new);
 }
 

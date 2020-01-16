@@ -12,6 +12,28 @@
 
 #include "lemin.h"
 
+static int			check_room_authencity(t_env *env)
+{
+	char	*name;
+	t_room	*room;
+	t_room	*tmp;
+
+	room = env->room;
+	while (room)
+	{
+		name = room->name;
+		tmp = env->room;
+		while (tmp)
+		{
+			if (tmp != room && ft_strcmp(name, tmp->name) == 0)
+				return (FAILURE);
+			tmp = tmp->next;
+		}
+		room = room->next;
+	}
+	return (SUCCESS);
+}
+
 static int			check_room(char *line)
 {
 	int i;
@@ -73,6 +95,8 @@ int					checkerror(t_env *env)
 		room = room->next;
 	}
 	if (i != 2)
+		return (FAILURE);
+	if (check_room_authencity(env) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }
