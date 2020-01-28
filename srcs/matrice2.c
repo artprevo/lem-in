@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-static void clean_matrice(t_env *env, size_t **matrice)
+static void	clean_matrice(t_env *env, size_t **matrice)
 {
 	size_t	i;
 	size_t	j;
@@ -32,7 +32,7 @@ static void clean_matrice(t_env *env, size_t **matrice)
 	env->matrice = matrice;
 }
 
-void 		okazou(t_env *env)
+void		okazou(t_env *env)
 {
 	size_t	**matrice;
 	size_t	j;

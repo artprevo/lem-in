@@ -61,9 +61,5 @@ int					main(void)
 	else if (processtreatment(env) == FAILURE)
 		ft_putstr("ERROR\n");
 	tafreetatoucompri(env);
-	while (1)
-	{
-
-	}
 	return (0);
 }

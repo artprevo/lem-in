@@ -90,7 +90,7 @@ int					set_answer_matrice(t_env *env)
 			return (FAILURE);
 		i++;
 	}
-	matrice[--i] = NULL;
+	matrice[i] = NULL;
 	env->answer_matrice = matrice;
 	fill_matrice(env);
 	return (SUCCESS);

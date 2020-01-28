@@ -104,7 +104,7 @@ int			set_matrice(t_env *env)
 			return (FAILURE);
 		i++;
 	}
-	matrice[--i] = NULL;
+	matrice[i] = NULL;
 	pipe = env->pipe;
 	while (pipe)
 	{

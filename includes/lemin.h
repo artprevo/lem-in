@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:51:51 by artprevo          #+#    #+#             */
-/*   Updated: 2020/01/14 16:51:52 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/01/28 12:18:50 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ int						checklinerror(char *line);
 int						checktype2(t_env *env, char *line);
 
 int						find_turns(t_env *env);
-void 					okazou(t_env *env);
+void					okazou(t_env *env);
 
 void					printpipe(t_env *env);
 void					printroom(t_env *env);
