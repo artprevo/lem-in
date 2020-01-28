@@ -19,12 +19,14 @@ t_answer			*create_answer(t_env *env)
 
 	if (env->answer == NULL)
 	{
-		new = initanswer();
+		if (!(new = initanswer()))
+			return (NULL);
 		env->answer = new;
 	}
 	else
 	{
-		new = initanswer();
+		if (!(new = initanswer()))
+			return (NULL);
 		tmp = env->answer;
 		while (tmp->next)
 			tmp = tmp->next;
@@ -41,12 +43,14 @@ t_ants				*create_ants(t_env *env, t_path *path, size_t id)
 
 	if (env->ants_list == NULL)
 	{
-		new = initants(path, id);
+		if (!(new = initants(path, id)))
+			return (NULL);
 		env->ants_list = new;
 	}
 	else
 	{
-		new = initants(path, id);
+		if (!(new = initants(path, id)))
+			return (NULL);
 		tmp = env->ants_list;
 		while (tmp->next)
 			tmp = tmp->next;

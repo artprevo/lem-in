@@ -55,8 +55,9 @@ int					main(void)
 {
 	t_env *env;
 
-	env = processinit();
-	if (processparsing(env) == FAILURE)
+	if (!(env = processinit()))
+		ft_putstr("ERROR\n");
+	else if (processparsing(env) == FAILURE)
 		ft_putstr("ERROR\n");
 	else if (processtreatment(env) == FAILURE)
 		ft_putstr("ERROR\n");

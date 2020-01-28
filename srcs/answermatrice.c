@@ -83,7 +83,7 @@ int					set_answer_matrice(t_env *env)
 	(env->path_idmax + 2))))
 		return (FAILURE);
 	i = 0;
-	while (i <= env->path_idmax + 1)
+	while (i < env->path_idmax + 1)
 	{
 		if (!(matrice[i] = (size_t *)malloc(sizeof(size_t) *
 		(env->path_idmax + 1))))

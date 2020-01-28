@@ -105,7 +105,6 @@ static	void	set_resolution(t_env *env)
 	tmp = find_best_path(env);
 	if (env->answer)
 	{
-		printf("salut\n");
 		answer = env->answer;
 		while (answer)
 		{
@@ -140,7 +139,8 @@ int				find_turns(t_env *env)
 	}
 	if (j < 500)
 	{
-		set_answer_matrice(env);
+		if (set_answer_matrice(env) == FAILURE)
+			return (FAILURE);
 		if (explore_answer_matrice(env) == FAILURE)
 			return (FAILURE);
 	}

@@ -39,7 +39,8 @@ static int		ants_multipath(t_env *env)
 	{
 		if (k >= answer->nb_path)
 			k = 0;
-		ants = create_ants(env, find_path(answer->path[k], env), id);
+		if (!(ants = create_ants(env, find_path(answer->path[k], env), id)))
+			return (FAILURE);
 		k++;
 		id++;
 	}
@@ -84,13 +85,12 @@ int				print_result(t_env *env, size_t id)
 	if (env->resolution == STRAIGHT)
 	{
 		while ((path->steps + env->ants) != env->steps)
-		{
 			path = path->next;
-		}
 		env->nb_paths_used = 1;
 		while (id <= env->ants)
 		{
-			ants = create_ants(env, path, id);
+			if (!(ants = create_ants(env, path, id)))
+				return (FAILURE);
 			id++;
 		}
 		multipathing(env, 0, 0);

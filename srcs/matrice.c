@@ -98,7 +98,7 @@ int			set_matrice(t_env *env)
 	if (!(matrice = (size_t **)malloc(sizeof(size_t *) * (env->idmax + 2))))
 		return (FAILURE);
 	i = 0;
-	while (i <= env->idmax + 1)
+	while (i < env->idmax + 1)
 	{
 		if (!(matrice[i] = (size_t *)malloc(sizeof(size_t) * (env->idmax + 1))))
 			return (FAILURE);

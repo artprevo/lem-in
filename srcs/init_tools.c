@@ -19,12 +19,14 @@ t_room			*create_room(t_env *env)
 
 	if (env->room == NULL)
 	{
-		new = initroom();
+		if (!(new = initroom()))
+			return (NULL);
 		env->room = new;
 	}
 	else
 	{
-		new = initroom();
+		if (!(new = initroom()))
+			return (NULL);
 		tmp = env->room;
 		while (tmp->next)
 			tmp = tmp->next;
@@ -42,12 +44,14 @@ t_pipe			*create_pipe(t_env *env)
 
 	if (env->pipe == NULL)
 	{
-		new = initpipe();
+		if (!(new = initpipe()))
+			return (NULL);
 		env->pipe = new;
 	}
 	else
 	{
-		new = initpipe();
+		if (!(new = initpipe()))
+			return (NULL);
 		tmp = env->pipe;
 		while (tmp->next)
 			tmp = tmp->next;
@@ -65,12 +69,14 @@ t_path			*create_path(t_env *env)
 
 	if (env->path == NULL)
 	{
-		new = initpath();
+		if (!(new = initpath()))
+			return (NULL);
 		env->path = new;
 	}
 	else
 	{
-		new = initpath();
+		if (!(new = initpath()))
+			return (NULL);
 		tmp = env->path;
 		while (tmp->next)
 			tmp = tmp->next;
@@ -87,12 +93,14 @@ t_ways			*create_ways(t_path *path, size_t id)
 
 	if (path->ways == NULL)
 	{
-		new = initways(id);
+		if (!(new = initways(id)))
+			return (NULL);
 		path->ways = new;
 	}
 	else
 	{
-		new = initways(id);
+		if (!(new = initways(id)))
+			return (NULL);
 		tmp = path->ways;
 		while (tmp->next)
 			tmp = tmp->next;
