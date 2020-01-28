@@ -12,6 +12,11 @@
 
 #include "lemin.h"
 
+void					printpipe(t_env *env);
+void					printroom(t_env *env);
+void					printmatrice(t_env *env);
+void					printpath(t_env *env);
+void					printmatrice2(t_env *env);
 
 void        printroom(t_env *env)
 {

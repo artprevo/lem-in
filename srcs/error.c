@@ -34,7 +34,33 @@ static int			check_room_authencity(t_env *env)
 	return (SUCCESS);
 }
 
-static int			check_room(char *line)
+static int			check_pipe_authencity(t_env *env)
+{
+	t_room	*room;
+	t_pipe	*pipe;
+	size_t	k;
+
+	pipe = env->pipe;
+	while (pipe)
+	{
+		k = 0;
+		room = env->room;
+		while (room)
+		{
+			if (ft_strcmp(pipe->a, room->name) == 0)
+				k++;
+			if (ft_strcmp(pipe->b, room->name) == 0)
+				k++;
+			room = room->next;
+		}
+		if (k != 2)
+			return (FAILURE);
+		pipe = pipe->next;
+	}
+	return (SUCCESS);
+}
+
+int					check_room(char *line)
 {
 	int i;
 	int j;
@@ -97,6 +123,8 @@ int					checkerror(t_env *env)
 	if (i != 2)
 		return (FAILURE);
 	if (check_room_authencity(env) == FAILURE)
+		return (FAILURE);
+	if (check_pipe_authencity(env) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }

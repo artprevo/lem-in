@@ -97,8 +97,10 @@ int			explore_matrice(t_env *env, size_t i, size_t j, size_t **matrice)
 		j++;
 		if (j == env->idmax && i == 0 && z > env->idmax)
 			return (SUCCESS);
-		if (z++ > 1000000 && env->path)
+		if (z++ > 2000000 && env->path)
 			return (SUCCESS);
+		if (z > 2000000000)
+			return (FAILURE);
 	}
 	return (SUCCESS);
 }

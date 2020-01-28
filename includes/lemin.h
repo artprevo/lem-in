@@ -148,6 +148,8 @@ int						set_answer_matrice(t_env *env);
 t_path					*find_path(size_t i, t_env *env);
 
 void					tafreetatoucompri(t_env *env);
+void					freepipe(t_env *env);
+void					freeants(t_env *env);
 
 size_t					absolute(int i);
 void					reso_calcul(t_env *env, t_path *tmp, t_answer *answer);
@@ -169,16 +171,11 @@ t_ants					*mp_tool5(t_env *env, size_t *i, size_t *j);
 
 int						checkerror(t_env *env);
 int						checklinerror(char *line);
+int						check_room(char *line);
 
 int						checktype2(t_env *env, char *line);
 
 int						find_turns(t_env *env);
 void					okazou(t_env *env);
-
-void					printpipe(t_env *env);
-void					printroom(t_env *env);
-void					printmatrice(t_env *env);
-void					printpath(t_env *env);
-void					printmatrice2(t_env *env);
 
 #endif

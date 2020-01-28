@@ -30,6 +30,8 @@ int			checktype2(t_env *env, char *line)
 {
 	if (env->parsing_state == ANTS)
 	{
+		if (ft_strchr(line, '#') != 0)
+			return (SUCCESS);
 		if (checkants(line) == FAILURE)
 			return (FAILURE);
 		if (ft_atoi(line) <= 0)
@@ -48,5 +50,5 @@ int			checktype2(t_env *env, char *line)
 		env->parsing_state = END;
 		return (SUCCESS);
 	}
-	return (FAILURE);
+	return (TRUE);
 }

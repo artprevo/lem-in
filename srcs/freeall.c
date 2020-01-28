@@ -16,8 +16,6 @@ static	void	freeanswer(t_env *env)
 {
 	t_answer	*answer;
 	t_answer	*tmpw;
-	t_ants		*ants;
-	t_ants		*tmpa;
 
 	if (env->answer)
 	{
@@ -25,19 +23,9 @@ static	void	freeanswer(t_env *env)
 		while (answer)
 		{
 			free(answer->path);
- 			tmpw = answer->next;
+			tmpw = answer->next;
 			free(answer);
 			answer = tmpw;
-		}
-	}
-	if (env->ants_list)
-	{
-		ants = env->ants_list;
-		while (ants)
-		{
-			tmpa = ants->next;
-			free(ants);
-			ants = tmpa;
 		}
 	}
 }
@@ -68,25 +56,11 @@ static	void	freepath(t_env *env)
 	}
 }
 
-static	void	freepipe(t_env *env)
+static	void	freeroom(t_env *env)
 {
-	t_pipe	*pipe;
-	t_pipe	*tmpp;
 	t_room	*room;
 	t_room	*tmpr;
 
-	if (env->pipe)
-	{
-		pipe = env->pipe;
-		while (pipe)
-		{
-			free(pipe->a);
-			free(pipe->b);
-			tmpp = pipe->next;
-			free(pipe);
-			pipe = tmpp;
-		}
-	}
 	if (env->room)
 	{
 		room = env->room;
@@ -133,6 +107,8 @@ void			tafreetatoucompri(t_env *env)
 {
 	freematrice(env);
 	freepipe(env);
+	freeroom(env);
+	freeants(env);
 	freepath(env);
 	freeanswer(env);
 	free(env);
