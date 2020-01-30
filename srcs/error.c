@@ -122,9 +122,12 @@ int					checkerror(t_env *env)
 	}
 	if (i != 2)
 		return (FAILURE);
+	printf("Timer = %llu ms, %s\n", g_timer, "Start Check room");
 	if (check_room_authencity(env) == FAILURE)
 		return (FAILURE);
+	printf("Timer = %llu ms, %s\n", g_timer, "Start check pipe");
 	if (check_pipe_authencity(env) == FAILURE)
 		return (FAILURE);
+	printf("Timer = %llu ms, %s\n", g_timer, "End of checks");
 	return (SUCCESS);
 }

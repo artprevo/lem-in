@@ -19,10 +19,10 @@ void			print_answer(t_env *env, size_t ants, size_t idroom)
 	room = env->room;
 	while (room->id != idroom)
 		room = room->next;
-	ft_putchar('L');
-	ft_putnbr((int)ants);
-	ft_putchar('-');
-	ft_putstr(room->name);
+	// ft_putchar('L');
+	// ft_putnbr((int)ants);
+	// ft_putchar('-');
+	// ft_putstr(room->name);
 }
 
 static int		ants_multipath(t_env *env)

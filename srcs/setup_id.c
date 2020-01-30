@@ -17,6 +17,7 @@ static void		put_id_pipe(t_env *env)
 	t_pipe	*pipe;
 	t_room	*room;
 
+	printf("Timer = %llu ms, %s\n", g_timer, "Start put id pipe");
 	room = env->room;
 	pipe = env->pipe;
 	while (pipe)
@@ -32,6 +33,7 @@ static void		put_id_pipe(t_env *env)
 		}
 		pipe = pipe->next;
 	}
+	printf("Timer = %llu ms, %s\n", g_timer, "End put_id_pipe");
 }
 
 void			put_id_path(t_env *env)

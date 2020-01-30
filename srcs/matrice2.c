@@ -82,8 +82,10 @@ int			explore_matrice(t_env *env, size_t i, size_t j, size_t **matrice)
 	size_t	z;
 
 	z = 0;
+	printf("Timer = %llu ms, %s\n", g_timer, "Algo_start");
 	while (j <= env->idmax)
 	{
+		// printf("z = %zu\n", z);
 		if (matrice[i][j] == 1 && (did_not_pass(env, matrice[j]) == TRUE))
 		{
 			if (scout_matrice(env, matrice, &i, &j) == FAILURE)
@@ -99,6 +101,7 @@ int			explore_matrice(t_env *env, size_t i, size_t j, size_t **matrice)
 			return (SUCCESS);
 		if (z++ > 2000000 && env->path)
 			return (SUCCESS);
+		// z++;
 		if (z > 2000000000)
 			return (FAILURE);
 	}

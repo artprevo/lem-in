@@ -22,8 +22,8 @@ int					processparsing(t_env *env)
 	while (get_next_line(0, &line) == TRUE)
 	{
 		i++;
-		ft_putstr(line);
-		ft_putchar('\n');
+		// ft_putstr(line);
+		// ft_putchar('\n');
 		if (checktype(env, line) == FAILURE)
 		{
 			ft_putchar('\n');
@@ -32,6 +32,7 @@ int					processparsing(t_env *env)
 		}
 		free(line);
 	}
+	printf("Timer = %llu ms, %s\n", g_timer, "End of parsing");
 	free(line);
 	if (i != 0)
 		ft_putchar('\n');
@@ -51,10 +52,25 @@ static int			processtreatment(t_env *env)
 	return (SUCCESS);
 }
 
+void	*time_loop(void *arg)
+{
+	(void)arg;
+	g_timer = 0;
+	while (1)
+	{
+		g_timer += 1;
+		usleep(1000);
+	}
+	return 0;
+}
+
 int					main(void)
 {
 	t_env *env;
 
+	pthread_t	timethread;
+
+	pthread_create(&(timethread), NULL, time_loop, &timethread);
 	if (!(env = processinit()))
 		ft_putstr("ERROR\n");
 	else
