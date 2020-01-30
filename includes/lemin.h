@@ -178,6 +178,9 @@ int						checklinerror(char *line);
 int						check_room(char *line);
 
 int						checktype2(t_env *env, char *line);
+char					*get_pipe_a(char *line);
+char					*get_pipe_b(char *line);
+
 
 int						find_turns(t_env *env);
 void					okazou(t_env *env);

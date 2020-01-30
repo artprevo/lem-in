@@ -12,66 +12,36 @@
 
 #include "lemin.h"
 
-static int		fill_pipe2(t_env *env, t_pipe *pipe, char *line)
-{
-	int		i;
-	int		j;
-	char	*tmp;
-	t_room	*room;
-
-	i = 0;
-	j = 0;
-	while (line[i++])
-	{
-		if (line[i] == '-')
-			j = i;
-	}
-	if (!(tmp = ft_strnew(i - j + 1)))
-		return (FAILURE);
-	i = 0;
-	while (line[j])
-		tmp[i++] = line[++j];
-	room = env->room;
-	while (room && ft_strcmp(tmp, room->name) != 0)
-		room = room->next;
-	free(tmp);
-	if (room)
-		pipe->idb = room->id;
-	else
-		return (FAILURE);
-	return (SUCCESS);
-}
-
 static int		fill_pipe(t_env *env, t_pipe *pipe, char *line)
 {
-	char	*tmp;
-	int		i;
-	int		j;
+	char	*tmp_a;
+	char	*tmp_b;
 	t_room	*room;
 
-	i = 0;
-	j = 0;
-	while (line[i] != '-')
-		i++;
-	if (!(tmp = ft_strnew(i + 1)))
+	if (!(tmp_a = get_pipe_a(line)))
 		return (FAILURE);
-	while (line[j] != '-')
-	{
-		tmp[j] = line[j];
-		j++;
-	}
-	tmp[j] = '\0';
+	if (!(tmp_b = get_pipe_b(line)))
+		return (FAILURE);
 	room = env->room;
-	while (room && ft_strcmp(tmp, room->name) != 0)
+	while (room)
+	{
+		if (tmp_a && ft_strcmp(tmp_a, room->name) != 0)
+		{
+			pipe->ida = room->id;
+			free(tmp_a);
+			tmp_a = NULL;
+		}
+		else if (tmp_b && ft_strcmp(tmp_b, room->name) != 0)
+		{
+			pipe->idb = room->id;
+			free(tmp_b);
+			tmp_b = NULL;
+		}
+		if (!tmp_a && !tmp_b)
+			return (SUCCESS);
 		room = room->next;
-	free(tmp);
-	if (room)
-		pipe->ida = room->id;
-	else
-		return (FAILURE);
-	if (fill_pipe2(env, pipe, line) == FAILURE)
-		return (FAILURE);
-	return (SUCCESS);
+	}
+	return (FAILURE);
 }
 
 static int		fill_room(t_env *env, t_room *room, char *line)
