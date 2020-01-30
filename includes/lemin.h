@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "unistd.h"
+# include <pthread.h>
 
 # define BUFFER_SIZE	10000
 # define SHIFT_MIN		32
@@ -38,6 +39,8 @@
 
 # define STRAIGHT		1
 # define MULTIPATH		2
+
+uint64_t				g_timer;
 
 typedef	struct			s_env
 {
