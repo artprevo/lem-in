@@ -12,11 +12,12 @@
 
 #include "lemin.h"
 
-static int		fill_pipe2(t_pipe *pipe, char *line)
+static int		fill_pipe2(t_env *env, t_pipe *pipe, char *line)
 {
 	int		i;
 	int		j;
 	char	*tmp;
+	t_room	*room;
 
 	i = 0;
 	j = 0;
@@ -30,20 +31,23 @@ static int		fill_pipe2(t_pipe *pipe, char *line)
 	i = 0;
 	while (line[j])
 		tmp[i++] = line[++j];
-	if (!(pipe->b = ft_strdup(tmp)))
-	{
-		free(tmp);
-		return (FAILURE);
-	}
+	room = env->room;
+	while (room && ft_strcmp(tmp, room->name) != 0)
+		room = room->next;
 	free(tmp);
+	if (room)
+		pipe->idb = room->id;
+	else
+		return (FAILURE);
 	return (SUCCESS);
 }
 
-static int		fill_pipe(t_pipe *pipe, char *line)
+static int		fill_pipe(t_env *env, t_pipe *pipe, char *line)
 {
 	char	*tmp;
 	int		i;
 	int		j;
+	t_room	*room;
 
 	i = 0;
 	j = 0;
@@ -57,18 +61,20 @@ static int		fill_pipe(t_pipe *pipe, char *line)
 		j++;
 	}
 	tmp[j] = '\0';
-	if (!(pipe->a = ft_strdup(tmp)))
-	{
-		free(tmp);
-		return (FAILURE);
-	}
+	room = env->room;
+	while (room && ft_strcmp(tmp, room->name) != 0)
+		room = room->next;
 	free(tmp);
-	if (fill_pipe2(pipe, line) == FAILURE)
+	if (room)
+		pipe->ida = room->id;
+	else
+		return (FAILURE);
+	if (fill_pipe2(env, pipe, line) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }
 
-static int		fill_room(t_room *room, char *line)
+static int		fill_room(t_env *env, t_room *room, char *line)
 {
 	char	*tmp;
 	int		i;
@@ -89,6 +95,7 @@ static int		fill_room(t_room *room, char *line)
 		free(tmp);
 		return (FAILURE);
 	}
+	room->id = env->idmax++;
 	free(tmp);
 	return (SUCCESS);
 }
@@ -101,7 +108,7 @@ static int		parsing_room(t_env *env, char *line)
 		return (FAILURE);
 	if (check_room(line) != 2)
 		return (FAILURE);
-	if (fill_room(room, line) == FAILURE)
+	if (fill_room(env, room, line) == FAILURE)
 		return (FAILURE);
 	room->state = env->parsing_state;
 	env->parsing_state = NORMAL;
@@ -122,9 +129,14 @@ int				checktype(t_env *env, char *line)
 		return (FAILURE);
 	if (ft_strchr(line, '-') != FALSE)
 	{
+		if (env->room_parsed == 0)
+		{
+			put_id_room(env);
+			env->room_parsed = 1;
+		}
 		if (!(pipe = create_pipe(env)))
 			return (FAILURE);
-		if (fill_pipe(pipe, line) == FAILURE)
+		if (fill_pipe(env, pipe, line) == FAILURE)
 			return (FAILURE);
 		return (SUCCESS);
 	}

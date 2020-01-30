@@ -41,7 +41,7 @@ int					processparsing(t_env *env)
 
 static int			processtreatment(t_env *env)
 {
-	put_id_room(env, 1);
+	// put_id_room(env, 1);
 	if (set_matrice(env) == FAILURE)
 		return (FAILURE);
 	okazou(env);
@@ -81,6 +81,9 @@ int					main(void)
 		else if (processtreatment(env) == FAILURE)
 			ft_putstr("ERROR\n");
 	}
+	// printroom(env);
+	// printpipe(env);
+	// printmatrice(env);
 	tafreetatoucompri(env);
 	return (0);
 }

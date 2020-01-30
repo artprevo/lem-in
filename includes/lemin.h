@@ -58,6 +58,7 @@ typedef	struct			s_env
 	int					parsing_state;
 	size_t				resolution;
 	size_t				nb_paths_used;
+	size_t				room_parsed;
 	size_t				turns;
 	size_t				wrote;
 }						t_env;
@@ -134,7 +135,7 @@ t_path					*create_path(t_env *env);
 t_answer				*create_answer(t_env *env);
 t_ants					*create_ants(t_env *env, t_path *path, size_t id);
 
-void					put_id_room(t_env *env, size_t id);
+void					put_id_room(t_env *env);
 void					put_id_path(t_env *env);
 
 int						set_matrice(t_env *env);

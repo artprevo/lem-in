@@ -12,30 +12,6 @@
 
 #include "lemin.h"
 
-static void		put_id_pipe(t_env *env)
-{
-	t_pipe	*pipe;
-	t_room	*room;
-
-	printf("Timer = %llu ms, %s\n", g_timer, "Start put id pipe");
-	room = env->room;
-	pipe = env->pipe;
-	while (pipe)
-	{
-		room = env->room;
-		while (room)
-		{
-			if (ft_strcmp(room->name, pipe->a) == 0)
-				pipe->ida = room->id;
-			if (ft_strcmp(room->name, pipe->b) == 0)
-				pipe->idb = room->id;
-			room = room->next;
-		}
-		pipe = pipe->next;
-	}
-	printf("Timer = %llu ms, %s\n", g_timer, "End put_id_pipe");
-}
-
 void			put_id_path(t_env *env)
 {
 	t_path	*path;
@@ -52,31 +28,32 @@ void			put_id_path(t_env *env)
 	env->path_idmax = i - 1;
 }
 
-void			put_id_room(t_env *env, size_t id)
+void			put_id_room(t_env *env)
 {
 	t_room	*room;
+	t_room	*tmp;
 
+	printf("env->idmax = %zu\n", env->idmax);
+	env->idmax--;
 	room = env->room;
 	while (room)
 	{
-		id++;
-		room = room->next;
-	}
-	env->idmax = id - 2;
-	room = env->room;
-	id = 1;
-	while (room)
-	{
-		if (room->state == START)
-			room->id = 0;
-		else if (room->state == END)
-			room->id = env->idmax;
-		else
+		if (room->state == START && room->id != 0)
 		{
-			room->id = id;
-			id++;
+			tmp = env->room;
+			while (tmp && tmp->id != 0)
+				tmp = tmp->next;
+			tmp->id = room->id;
+			room->id = 0;
+		}
+		else if (room->state == END && room->id != env->idmax)
+		{
+			tmp = env->room;
+			while (tmp && tmp->id != env->idmax)
+				tmp = tmp->next;
+			tmp->id = room->id;
+			room->id = env->idmax;
 		}
 		room = room->next;
 	}
-	put_id_pipe(env);
 }

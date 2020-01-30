@@ -15,13 +15,9 @@
 t_pipe				*initpipe(void)
 {
 	t_pipe		*new;
-	// static int i = 0;
 
 	if (!(new = (t_pipe *)malloc(sizeof(t_pipe))))
 		return (NULL);
-	// printf("Static initpipe = %d\n", i++);
-	new->a = NULL;
-	new->b = NULL;
 	new->ida = 0;
 	new->idb = 0;
 	new->next = NULL;
@@ -32,12 +28,10 @@ t_pipe				*initpipe(void)
 t_room				*initroom(void)
 {
 	t_room	*new;
-	// static int i = 0;
 
 	if (!(new = (t_room *)malloc(sizeof(t_room))))
 		return (NULL);
 	new->state = 0;
-	// printf("Static initroom = %d\n", i++);
 	new->id = 0;
 	new->name = NULL;
 	new->next = NULL;
@@ -48,13 +42,11 @@ t_room				*initroom(void)
 static t_env		*ft_initenv(void)
 {
 	t_env	*new;
-	// static int i = 0;
 
 	if (!(new = (t_env *)malloc(sizeof(t_env))))
 		return (NULL);
 	new->matrice = NULL;
 	new->answer_matrice = NULL;
-	// printf("Static initenv = %d\n", i++);
 	new->pipe = NULL;
 	new->room = NULL;
 	new->path = NULL;
@@ -68,6 +60,7 @@ static t_env		*ft_initenv(void)
 	new->turns = 0;
 	new->steps = 0;
 	new->resolution = 0;
+	new->room_parsed = 0;
 	return (new);
 }
 
