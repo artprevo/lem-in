@@ -60,6 +60,11 @@ static int		fill_room(t_env *env, t_room *room, char *line)
 	while (line[i] != ' ')
 		tmp[k++] = line[i++];
 	tmp[k] = '\0';
+	if (check_room_authencity(env, tmp) == FAILURE)
+	{
+		free(tmp);
+		return (FAILURE);
+	}
 	if (!(room->name = ft_strdup(tmp)))
 	{
 		free(tmp);

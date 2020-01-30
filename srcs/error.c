@@ -12,53 +12,19 @@
 
 #include "lemin.h"
 
-static int			check_room_authencity(t_env *env)
+int			check_room_authencity(t_env *env, char *name)
 {
-	char	*name;
 	t_room	*room;
-	t_room	*tmp;
 
 	room = env->room;
 	while (room)
 	{
-		name = room->name;
-		tmp = env->room;
-		while (tmp)
-		{
-			if (tmp != room && ft_strcmp(name, tmp->name) == 0)
-				return (FAILURE);
-			tmp = tmp->next;
-		}
+		if (room->name && ft_strcmp(name, room->name) == 0)
+			return (FAILURE);
 		room = room->next;
 	}
 	return (SUCCESS);
 }
-
-// static int			check_pipe_authencity(t_env *env)
-// {
-// 	t_room	*room;
-// 	t_pipe	*pipe;
-// 	size_t	k;
-//
-// 	pipe = env->pipe;
-// 	while (pipe)
-// 	{
-// 		k = 0;
-// 		room = env->room;
-// 		while (room)
-// 		{
-// 			if (ft_strcmp(pipe->a, room->name) == 0)
-// 				k++;
-// 			if (ft_strcmp(pipe->b, room->name) == 0)
-// 				k++;
-// 			room = room->next;
-// 		}
-// 		if (k != 2)
-// 			return (FAILURE);
-// 		pipe = pipe->next;
-// 	}
-// 	return (SUCCESS);
-// }
 
 int					check_room(char *line)
 {
@@ -121,9 +87,6 @@ int					checkerror(t_env *env)
 		room = room->next;
 	}
 	if (i != 2)
-		return (FAILURE);
-	printf("Timer = %llu ms, %s\n", g_timer, "Start Check room");
-	if (check_room_authencity(env) == FAILURE)
 		return (FAILURE);
 	printf("Timer = %llu ms, %s\n", g_timer, "End of checks");
 	return (SUCCESS);

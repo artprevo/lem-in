@@ -176,6 +176,7 @@ t_ants					*mp_tool5(t_env *env, size_t *i, size_t *j);
 int						checkerror(t_env *env);
 int						checklinerror(char *line);
 int						check_room(char *line);
+int						check_room_authencity(t_env *env, char *name);
 
 int						checktype2(t_env *env, char *line);
 char					*get_pipe_a(char *line);
