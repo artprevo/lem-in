@@ -12,10 +12,10 @@
 
 NAME = lem-in
 CC = clang
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -fsanitize=address
 SRCS = main.c init.c init_tools.c parsing.c freeall.c utility.c \
 setup_id.c matrice.c answer.c answermatrice.c result.c init2.c init_tools2.c \
-matrice2.c result2.c error.c parsing2.c freeall2.c print.c
+matrice2.c result2.c error.c parsing2.c freeall2.c print.c algo_multipath.c
 
 OBJS_PATH = objs/
 SRCS_PATH = srcs/

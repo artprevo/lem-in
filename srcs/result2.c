@@ -53,7 +53,7 @@ t_ways		*mp_tool3(t_env *env, t_ants *ants)
 void		mp_tool4(t_env *env)
 {
 	// if (env->wrote != 0)
-	// 	ft_putchar('\n');
+		// ft_putchar('\n');
 }
 
 t_ants		*mp_tool5(t_env *env, size_t *i, size_t *space)

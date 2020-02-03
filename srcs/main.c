@@ -22,8 +22,8 @@ int					processparsing(t_env *env)
 	while (get_next_line(0, &line) == TRUE)
 	{
 		i++;
-		// ft_putstr(line);
-		// ft_putchar('\n');
+		ft_putstr(line);
+		ft_putchar('\n');
 		if (checktype(env, line) == FAILURE)
 		{
 			ft_putchar('\n');
@@ -45,10 +45,13 @@ static int			processtreatment(t_env *env)
 	if (set_matrice(env) == FAILURE)
 		return (FAILURE);
 	okazou(env);
+	printf("Timer = %llu ms, %s\n", g_timer, "Start of answer");
 	if (find_turns(env) == FAILURE)
 		return (FAILURE);
+	printf("Timer = %llu ms, %s\n", g_timer, "End of answer / Start of Print");
 	if (print_result(env, 1) == FAILURE)
 		return (FAILURE);
+	printf("Timer = %llu ms, %s\n", g_timer, "End of prog");
 	return (SUCCESS);
 }
 
@@ -81,6 +84,8 @@ int					main(void)
 		else if (processtreatment(env) == FAILURE)
 			ft_putstr("ERROR\n");
 	}
+	printanswer(env);
+	printmatrice2(env);
 	// printroom(env);
 	// printpipe(env);
 	// printmatrice(env);

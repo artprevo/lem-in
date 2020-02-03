@@ -182,6 +182,8 @@ int						checktype2(t_env *env, char *line);
 char					*get_pipe_a(char *line);
 char					*get_pipe_b(char *line);
 
+int						make_answer(t_env *env, size_t i, size_t k);
+int						algo_multipath(t_env *env, size_t i, size_t k);
 
 int						find_turns(t_env *env);
 void					okazou(t_env *env);

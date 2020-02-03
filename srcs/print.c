@@ -124,3 +124,20 @@ void 		printpath(t_env *env)
 		path = path->next;
 	}
 }
+
+void 		printanswer(t_env *env)
+{
+	t_answer	*answer;
+	size_t		i;
+
+	answer = env->answer;
+	while (answer)
+	{
+		i = 0;
+		while (i < answer->nb_path)
+			printf("path = %zu ||", answer->path[i++]);
+		printf("\n");
+		// printf("answer->steps = %zu || answer->nb_path = %zu\n", answer->steps, answer->nb_path);
+		answer = answer->next;
+	}
+}

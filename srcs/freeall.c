@@ -83,7 +83,7 @@ static	void	freematrice(t_env *env)
 	{
 		matrice = env->matrice;
 		i = 0;
-		while (i <= env->idmax + 1)
+		while (i <= env->idmax)
 		{
 			free(matrice[i]);
 			i++;
@@ -94,7 +94,7 @@ static	void	freematrice(t_env *env)
 	if (env->answer_matrice)
 	{
 		matrice = env->answer_matrice;
-		while (i <= env->path_idmax + 1)
+		while (i <= env->path_idmax)
 		{
 			free(matrice[i]);
 			i++;

@@ -21,11 +21,16 @@ size_t		absolute(int i)
 
 void		reso_calcul(t_env *env, t_path *tmp, t_answer *answer)
 {
+	printf("steps du straight = %zu\n", tmp->steps + env->ants);
+	printf("steps de l'answer = %zu \n", (((answer->steps / answer->nb_path) +
+	(answer->steps % answer->nb_path)) +
+	(env->ants / answer->nb_path + env->ants % answer->nb_path)));
 	if ((tmp->steps + env->ants) < (((answer->steps / answer->nb_path) +
 	(answer->steps % answer->nb_path)) +
 	(env->ants / answer->nb_path + env->ants % answer->nb_path)))
 	{
 		env->steps = (tmp->steps + env->ants);
+		env->nb_paths_used = 1;
 		env->resolution = STRAIGHT;
 	}
 	else
@@ -35,6 +40,7 @@ void		reso_calcul(t_env *env, t_path *tmp, t_answer *answer)
 		(env->ants / answer->nb_path + env->ants % answer->nb_path));
 		env->resolution = MULTIPATH;
 		env->answer = answer;
+		env->nb_paths_used = answer->nb_path;
 	}
 }
 
@@ -43,15 +49,20 @@ size_t		*add_path(t_env *env, size_t **matrice, size_t k, size_t i)
 	size_t		j;
 	size_t		*paths;
 
-	if (!(paths = (size_t *)malloc(sizeof(size_t) * (k + 2))))
+	if (!(paths = (size_t *)malloc(sizeof(size_t) * (k + 1))))
 		return (NULL);
+	// printf("taille malloc = %zu\n", k + 2);
 	j = 0;
 	k = 0;
 	paths[0] = i;
+	printmatrice2(env);
+	// printf("i = %zu || j = %zu || k = %zu\n", i, j, k);
 	while (j <= env->path_idmax)
 	{
-		if (matrice[i][j] == 1)
+		if (matrice[i][j] == 2)
 			paths[++k] = j;
+		// printf("paths[k] = %zu || k = %zu\n", paths[k], k);
+		// printf("i = %zu || j = %zu || k = %zu\n", i, j, k);
 		j++;
 	}
 	return (paths);

@@ -33,7 +33,6 @@ void			put_id_room(t_env *env)
 	t_room	*room;
 	t_room	*tmp;
 
-	printf("env->idmax = %zu\n", env->idmax);
 	env->idmax--;
 	room = env->room;
 	while (room)

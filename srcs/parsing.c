@@ -25,13 +25,13 @@ static int		fill_pipe(t_env *env, t_pipe *pipe, char *line)
 	room = env->room;
 	while (room)
 	{
-		if (tmp_a && ft_strcmp(tmp_a, room->name) != 0)
+		if (tmp_a && ft_strcmp(tmp_a, room->name) == 0)
 		{
 			pipe->ida = room->id;
 			free(tmp_a);
 			tmp_a = NULL;
 		}
-		else if (tmp_b && ft_strcmp(tmp_b, room->name) != 0)
+		else if (tmp_b && ft_strcmp(tmp_b, room->name) == 0)
 		{
 			pipe->idb = room->id;
 			free(tmp_b);
@@ -85,6 +85,7 @@ static int		parsing_room(t_env *env, char *line)
 		return (FAILURE);
 	if (fill_room(env, room, line) == FAILURE)
 		return (FAILURE);
+	// printf("room_filled\n");
 	room->state = env->parsing_state;
 	env->parsing_state = NORMAL;
 	return (SUCCESS);

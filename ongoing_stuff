@@ -1,0 +1,68 @@
+En train de work sur l'algo de distribution dans answer
+
+fichiers importants :
+
+algo_multipath.c
+answer.c
+utility.c (add_path)
+
+5 parmi 6 : 5 * 1e 1 * 2e
+4 parmi 6 : 10 * 1e 4 * 2e 1 * 3e
+3 parmi 6 : 10 * 1e 6 * 2e 3 * 3e 1 * 4e
+2 parmi 6 : 5 * 1er 4 * 2e 3 * 3e * 2 * 4e 1 * 5e
+
+question : comment faire l'enchainement juste en dessous
+
+0 1 2 3 4 5
+
+01 02 03 04 05
+12 13 14 15    <<<< celui la
+23 24 25		<<<< a celui la
+34 35			<<<< a ici
+45			<<< ici aussi
+
+012 013 014 015
+023 024 025
+034 035
+045
+123 124 125
+134 135
+145
+234 235 245
+345
+
+0123 0124 0125
+0134 0135
+0145
+0234 0235 0245
+0345
+1234 1235 1245 1345
+2345
+
+01234 01235
+02345 12345
+
+012345
+
+011111
+101111
+110111
+111011
+111101
+111110
+
+013 014 015
+024 025
+035
+
+124 125
+135
+
+235
+
+0124 0125
+0134 0135
+0145
+0235 0245
+1235 1245
+01235

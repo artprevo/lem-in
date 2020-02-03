@@ -82,6 +82,8 @@ int				print_result(t_env *env, size_t id)
 	t_path		*path;
 
 	path = env->path;
+	printf("entree print_result\n");
+	printf("reso = %zu || nb_paths_usable = %zu || env->ants = %zu || env->steps = %zu\n", env->resolution, env->nb_paths_used, env->ants, env->steps);
 	if (env->resolution == STRAIGHT)
 	{
 		while ((path->steps + env->ants) != env->steps)

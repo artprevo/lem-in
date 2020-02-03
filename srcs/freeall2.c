@@ -39,8 +39,6 @@ void			freepipe(t_env *env)
 		pipe = env->pipe;
 		while (pipe)
 		{
-			free(pipe->a);
-			free(pipe->b);
 			tmpp = pipe->next;
 			free(pipe);
 			pipe = tmpp;

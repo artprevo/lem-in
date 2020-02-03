@@ -96,7 +96,7 @@ int			set_matrice(t_env *env)
 	t_pipe	*pipe;
 
 	printf("Timer = %llu ms, %s\n", g_timer, "Start set_matrice");
-	if (!(matrice = (size_t **)malloc(sizeof(size_t *) * (env->idmax + 2))))
+	if (!(matrice = (size_t **)malloc(sizeof(size_t *) * (env->idmax + 1))))
 		return (FAILURE);
 	i = 0;
 	while (i < env->idmax + 1)
@@ -105,7 +105,7 @@ int			set_matrice(t_env *env)
 			return (FAILURE);
 		i++;
 	}
-	matrice[i] = NULL;
+	// matrice[i] = NULL;
 	pipe = env->pipe;
 	while (pipe)
 	{
@@ -117,5 +117,6 @@ int			set_matrice(t_env *env)
 	if (explore_matrice(env, 0, 0, matrice) == FAILURE)
 		return (FAILURE);
 	printf("Timer = %llu ms, %s\n", g_timer, "End set_matrice");
+	// printmatrice(env);
 	return (SUCCESS);
 }

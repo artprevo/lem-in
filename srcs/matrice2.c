@@ -23,7 +23,7 @@ static void	clean_matrice(t_env *env, size_t **matrice)
 		j = 0;
 		while (j <= env->idmax)
 		{
-			if (matrice[i][j] == 2)
+			if (matrice[i][j] == 2 || matrice[i][j] == 3)
 				matrice[i][j] = 1;
 			j++;
 		}
@@ -56,6 +56,7 @@ void		okazou(t_env *env)
 		}
 		j++;
 	}
+	clean_matrice(env, env->matrice);
 }
 
 static int	scout_matrice(t_env *env, size_t **matrice, size_t *i, size_t *j)
@@ -65,7 +66,7 @@ static int	scout_matrice(t_env *env, size_t **matrice, size_t *i, size_t *j)
 	{
 		if (make_path(env) == FAILURE)
 			return (FAILURE);
-		*i = recursive(env, matrice, env->idmax);
+		recursive(env, matrice, env->idmax);
 		*j = *i;
 		*i = recursive(env, matrice, *i);
 	}
@@ -85,7 +86,6 @@ int			explore_matrice(t_env *env, size_t i, size_t j, size_t **matrice)
 	printf("Timer = %llu ms, %s\n", g_timer, "Algo_start");
 	while (j <= env->idmax)
 	{
-		// printf("z = %zu\n", z);
 		if (matrice[i][j] == 1 && (did_not_pass(env, matrice[j]) == TRUE))
 		{
 			if (scout_matrice(env, matrice, &i, &j) == FAILURE)
@@ -95,15 +95,11 @@ int			explore_matrice(t_env *env, size_t i, size_t j, size_t **matrice)
 		{
 			j = i;
 			i = recursive(env, matrice, i);
+			matrice[i][j] = 3;
 		}
 		j++;
-		if (j == env->idmax && i == 0 && z > env->idmax)
+		if (j == env->idmax && i == 0)
 			return (SUCCESS);
-		if (z++ > 2000000 && env->path)
-			return (SUCCESS);
-		// z++;
-		if (z > 2000000000)
-			return (FAILURE);
 	}
 	return (SUCCESS);
 }
