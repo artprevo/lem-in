@@ -12,7 +12,7 @@ utility.c (add_path)
 2 parmi 6 : 5 * 1er 4 * 2e 3 * 3e * 2 * 4e 1 * 5e
 
 question : comment faire l'enchainement juste en dessous
-
+pistes : https://www.dcode.fr/combinaisons
 0 1 2 3 4 5
 
 01 02 03 04 05
