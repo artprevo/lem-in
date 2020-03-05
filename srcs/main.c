@@ -84,9 +84,9 @@ int					main(void)
 		else if (processtreatment(env) == FAILURE)
 			ft_putstr("ERROR\n");
 	}
+	printpath(env);
 	printanswer(env);
-	printmatrice2(env);
-	// printroom(env);
+	printroom(env);
 	// printpipe(env);
 	// printmatrice(env);
 	tafreetatoucompri(env);

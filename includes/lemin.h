@@ -187,5 +187,6 @@ int						algo_multipath(t_env *env, size_t i, size_t k);
 
 int						find_turns(t_env *env);
 void					okazou(t_env *env);
+t_answer				*find_best_answer(t_env *env);
 
 #endif

@@ -120,7 +120,8 @@ void 		printpath(t_env *env)
 			printf("%zu || ", ways->id);
 			ways = ways->next;
 		}
-		printf("steps = %zu\n", path->steps);
+
+		printf("id = %zu || steps = %zu\n", path->id, path->steps);
 		path = path->next;
 	}
 }
@@ -129,6 +130,7 @@ void 		printanswer(t_env *env)
 {
 	t_answer	*answer;
 	size_t		i;
+	size_t		score;
 
 	answer = env->answer;
 	while (answer)
@@ -136,8 +138,12 @@ void 		printanswer(t_env *env)
 		i = 0;
 		while (i < answer->nb_path)
 			printf("path = %zu ||", answer->path[i++]);
-		printf("\n");
-		// printf("answer->steps = %zu || answer->nb_path = %zu\n", answer->steps, answer->nb_path);
+		// printf("\n");
+		printf(" answer->steps = %zu || answer->nb_path = %zu\n", answer->steps, answer->nb_path);
+		score = ((answer->steps / answer->nb_path) +
+		(answer->steps % answer->nb_path) + (env->ants / answer->nb_path) +
+		(env->ants % answer->nb_path));
+		// printf("score = %zu\n\n", score);
 		answer = answer->next;
 	}
 }

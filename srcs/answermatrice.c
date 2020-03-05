@@ -37,6 +37,36 @@ static int			do_not_share(t_env *env, t_path *path, t_path *tmp)
 	return (TRUE);
 }
 
+static void			full_dns(t_env *env)
+{
+	size_t	**matrice;
+	size_t	i;
+	size_t	j;
+	size_t	k;
+
+	matrice = env->answer_matrice;
+	i = 0;
+	while (i <= env->path_idmax)
+	{
+		j = 0;
+		while (j <= env->path_idmax)
+		{
+			if (matrice[i][j] == 1)
+			{
+				k = j + 1;
+				while (k <= env->path_idmax)
+				{
+					if (do_not_share(env, find_path(j, env), find_path(k, env)) == FALSE)
+						matrice[i][j] = 0;
+					k++;
+				}
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 t_path				*find_path(size_t i, t_env *env)
 {
 	t_path	*path;
@@ -92,6 +122,9 @@ int					set_answer_matrice(t_env *env)
 	}
 	env->answer_matrice = matrice;
 	fill_matrice(env);
+	printf("full dns commence\n");
+	full_dns(env);
+	printf("full dns termine\n");
 	printmatrice2(env);
 	return (SUCCESS);
 }

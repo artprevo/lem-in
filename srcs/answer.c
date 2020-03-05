@@ -34,11 +34,6 @@ int				make_answer(t_env *env, size_t i, size_t k)
 		answer->steps += path->steps;
 		i++;
 	}
-	if (env->steps == 0 || answer->steps < env->steps)
-	{
-		env->steps = answer->steps;
-		answer->best = 1;
-	}
 	return (SUCCESS);
 }
 
@@ -111,13 +106,7 @@ static	void	set_resolution(t_env *env)
 	tmp = find_best_path(env);
 	if (env->answer)
 	{
-		answer = env->answer;
-		while (answer)
-		{
-			if (answer->best == 1)
-				break ;
-			answer = answer->next;
-		}
+		answer = find_best_answer(env);
 		reso_calcul(env, tmp, answer);
 	}
 	else
