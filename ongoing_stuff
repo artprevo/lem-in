@@ -15,6 +15,8 @@ question : comment faire l'enchainement juste en dessous
 pistes : https://www.dcode.fr/combinaisons
 0 1 2 3 4 5
 
+size , range
+
 01 02 03 04 05
 12 13 14 15    <<<< celui la
 23 24 25		<<<< a celui la
@@ -41,6 +43,11 @@ pistes : https://www.dcode.fr/combinaisons
 
 01234 01235
 02345 12345
+
+int *tab;
+
+tab = malloc(sizeof(int) * k);
+
 
 012345
 

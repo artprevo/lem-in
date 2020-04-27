@@ -122,9 +122,9 @@ int					set_answer_matrice(t_env *env)
 	}
 	env->answer_matrice = matrice;
 	fill_matrice(env);
-	printf("full dns commence\n");
+	// printf("full dns commence\n");
 	full_dns(env);
-	printf("full dns termine\n");
+	// printf("full dns termine\n");
 	printmatrice2(env);
 	return (SUCCESS);
 }

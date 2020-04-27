@@ -49,6 +49,7 @@ typedef	struct			s_env
 	struct s_path		*path;
 	struct s_answer		*answer;
 	struct s_ants		*ants_list;
+	struct s_pth		*pth;
 	size_t				**matrice;
 	size_t				**answer_matrice;
 	size_t				idmax;
@@ -68,6 +69,7 @@ typedef struct			s_path
 	struct s_ways		*ways;
 	struct s_path		*next;
 	size_t				id;
+	size_t				idbis;
 	size_t				steps;
 	size_t				turns;
 }						t_path;
@@ -106,6 +108,23 @@ typedef struct			s_answer
 	size_t				steps;
 	struct s_answer		*next;
 }						t_answer;
+
+typedef struct			s_num
+{
+	int					value;
+	int					depth;
+	int					son_count;
+	int					*path;
+	struct s_num		**sons;
+}						t_num;
+
+typedef struct			s_pth
+{
+	int					*path;
+	int					size;
+	t_num				*ptr;
+	struct	s_pth		*next;
+}						t_pth;
 
 typedef struct			s_ants
 {
@@ -189,4 +208,5 @@ int						find_turns(t_env *env);
 void					okazou(t_env *env);
 t_answer				*find_best_answer(t_env *env);
 
+int						store_paths(t_env *env, int range, size_t i);
 #endif

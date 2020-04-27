@@ -11,21 +11,21 @@
 /* ************************************************************************** */
 
 #include "lemin.h"
+//
+// static void big_clean(t_env *env, size_t **matrice, size_t i)
+// {
+// 	size_t	j;
+//
+// 	j = 0;
+// 	while (j <= env->path_idmax)
+// 	{
+// 		if (matrice[i][j] == 1)
+// 			matrice[j][i] = 0;
+// 		j++;
+// 	}
+// }
 
-static void big_clean(t_env *env, size_t **matrice, size_t i)
-{
-	size_t	j;
-
-	j = 0;
-	while (j <= env->path_idmax)
-	{
-		if (matrice[i][j] == 1)
-			matrice[j][i] = 0;
-		j++;
-	}
-}
-
-static void	clean_answer(t_env *env, size_t i, size_t count, size_t k)
+static void	clean_answer(t_env *env, size_t i, size_t k)
 {
 	size_t	j;
 	size_t	**matrice;
@@ -34,8 +34,8 @@ static void	clean_answer(t_env *env, size_t i, size_t count, size_t k)
 	matrice = env->answer_matrice;
 	j = 0;
 	k_bis = 0;
-	// printf("matrice avant clean\n");
-	// printmatrice2(env);
+	printf("matrice avant clean\n");
+	printmatrice2(env);
 	// printf("count clean = %zu || k clean = %zu\n", count, k);
 	while (j <= env->path_idmax)
 	{
@@ -48,8 +48,8 @@ static void	clean_answer(t_env *env, size_t i, size_t count, size_t k)
 		}
 		j++;
 	}
-	// printf("matrice apres clean\n");
-	// printmatrice2(env);
+	printf("matrice apres clean\n");
+	printmatrice2(env);
 
 }
 
@@ -100,7 +100,7 @@ static int	algo_answer(t_env *env, size_t count, size_t i, size_t k)
 	if (make_answer(env, i, k) == FAILURE)
 		return (FAILURE);
 	// printf("answer !\n");
-	clean_answer(env, i, count, k);
+	clean_answer(env, i, k);
 	return (SUCCESS);
 }
 
@@ -137,7 +137,7 @@ int		algo_multipath(t_env *env, size_t i, size_t k)
 			// clean_answer();
 		}
 		// printf("fin de boucle, count = 0\n");
-		clean_answer(env, i, count, 1);
+		clean_answer(env, i, 1);
 		regulator++;
 		k_bis++;
 	}

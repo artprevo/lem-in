@@ -12,11 +12,11 @@
 
 #include "lemin.h"
 
-int				make_answer(t_env *env, size_t i, size_t k)
+int				make_answer(t_env *env)
 {
 	t_answer	*answer;
-	size_t		**matrice;
-	t_path		*path;
+	t_pth		*pth;
+	t_path		
 
 	if (!(answer = create_answer(env)))
 		return (FAILURE);
@@ -58,14 +58,12 @@ static int		explore_answer_matrice(t_env *env)
 		}
 		if (k != 0)
 		{
-			// printf("answer!\n");
-			if (algo_multipath(env, i, k) == FAILURE)
+			if (store_paths(env, k + 1, i) == FAILURE)
 				return (FAILURE);
-			// if (make_answer(env, i, k) == FAILURE)
-			// 	return (FAILURE);
 		}
 		i++;
 	}
+	exit(1);
 	return (SUCCESS);
 }
 
@@ -94,7 +92,7 @@ static void		find_nb_path(t_env *env)
 			nb_paths_used++;
 		j++;
 	}
-	printf("nb_paths_usable = %zu || i = %zu\n", nb_paths_used, i);
+	// printf("nb_paths_usable = %zu || i = %zu\n", nb_paths_used, i);
 	env->nb_paths_used = (i <= nb_paths_used ? i : nb_paths_used);
 }
 
@@ -125,6 +123,8 @@ int				find_turns(t_env *env)
 	if (set_answer_matrice(env) == FAILURE)
 		return (FAILURE);
 	if (explore_answer_matrice(env) == FAILURE)
+		return (FAILURE);
+	if (make_answer(env) == FAILURE)
 		return (FAILURE);
 	set_resolution(env);
 	return (SUCCESS);

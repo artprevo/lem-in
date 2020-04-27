@@ -84,9 +84,10 @@ int					main(void)
 		else if (processtreatment(env) == FAILURE)
 			ft_putstr("ERROR\n");
 	}
+	printf("env->steps = %zu\n", env->steps);
 	printpath(env);
 	printanswer(env);
-	printroom(env);
+	// printroom(env);
 	// printpipe(env);
 	// printmatrice(env);
 	tafreetatoucompri(env);
