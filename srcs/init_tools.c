@@ -86,7 +86,7 @@ t_path			*create_path(t_env *env)
 	return (new);
 }
 
-t_ways			*create_ways(t_path *path, size_t id)
+t_ways			*create_ways(t_path *path, int id)
 {
 	t_ways	*new;
 	t_ways	*tmp;

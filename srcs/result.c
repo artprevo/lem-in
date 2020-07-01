@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-void			print_answer(t_env *env, size_t ants, size_t idroom)
+void			print_answer(t_env *env, int ants, int idroom)
 {
 	t_room		*room;
 
@@ -28,8 +28,8 @@ void			print_answer(t_env *env, size_t ants, size_t idroom)
 static int		ants_multipath(t_env *env)
 {
 	t_answer	*answer;
-	size_t		k;
-	size_t		id;
+	int		k;
+	int		id;
 	t_ants		*ants;
 
 	id = 1;
@@ -47,13 +47,16 @@ static int		ants_multipath(t_env *env)
 	return (SUCCESS);
 }
 
-static void		multipathing(t_env *env, size_t i, size_t space)
+static void		multipathing(t_env *env, int i, int space)
 {
 	t_ants		*ants;
 	t_ways		*ways;
+	int			turns;
 
+	turns = 0;
 	while (everyone_not_arrived(env) == TRUE)
 	{
+		turns++;
 		ants = mp_tool5(env, &i, &space);
 		while (ants && i < env->nb_paths_used)
 		{
@@ -74,16 +77,17 @@ static void		multipathing(t_env *env, size_t i, size_t space)
 		}
 		mp_tool4(env);
 	}
+	printf("turns = %d\n", turns);
 }
 
-int				print_result(t_env *env, size_t id)
+int				print_result(t_env *env, int id)
 {
 	t_ants		*ants;
 	t_path		*path;
 
 	path = env->path;
 	// printf("entree print_result\n");
-	// printf("reso = %zu || nb_paths_usable = %zu || env->ants = %zu || env->steps = %zu\n", env->resolution, env->nb_paths_used, env->ants, env->steps);
+	// printf("reso = %d || nb_paths_usable = %d || env->ants = %d || env->steps = %d\n", env->resolution, env->nb_paths_used, env->ants, env->steps);
 	if (env->resolution == STRAIGHT)
 	{
 		while ((path->steps + env->ants) != env->steps)

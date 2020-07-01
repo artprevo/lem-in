@@ -61,6 +61,7 @@ static t_env		*ft_initenv(void)
 	new->steps = 0;
 	new->resolution = 0;
 	new->room_parsed = 0;
+	new->score = 0;
 	return (new);
 }
 

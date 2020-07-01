@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 14:30:03 by artprevo          #+#    #+#             */
-/*   Updated: 2020/01/07 14:30:13 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/07/01 20:03:57 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ static int			do_not_share(t_env *env, t_path *path, t_path *tmp)
 
 static void			full_dns(t_env *env)
 {
-	size_t	**matrice;
-	size_t	i;
-	size_t	j;
-	size_t	k;
+	int	**matrice;
+	int	i;
+	int	j;
+	int	k;
 
 	matrice = env->answer_matrice;
 	i = 0;
@@ -67,7 +67,7 @@ static void			full_dns(t_env *env)
 	}
 }
 
-t_path				*find_path(size_t i, t_env *env)
+t_path				*find_path(int i, t_env *env)
 {
 	t_path	*path;
 
@@ -83,9 +83,9 @@ t_path				*find_path(size_t i, t_env *env)
 
 static void			fill_matrice(t_env *env)
 {
-	size_t	i;
-	size_t	j;
-	size_t	**matrice;
+	int	i;
+	int	j;
+	int	**matrice;
 
 	i = 0;
 	matrice = env->answer_matrice;
@@ -106,16 +106,16 @@ static void			fill_matrice(t_env *env)
 
 int					set_answer_matrice(t_env *env)
 {
-	size_t	**matrice;
-	size_t	i;
+	int	**matrice;
+	int	i;
 
-	if (!(matrice = (size_t **)malloc(sizeof(size_t *) *
+	if (!(matrice = (int **)malloc(sizeof(int *) *
 	(env->path_idmax + 1))))
 		return (FAILURE);
 	i = 0;
 	while (i < env->path_idmax + 1)
 	{
-		if (!(matrice[i] = (size_t *)malloc(sizeof(size_t) *
+		if (!(matrice[i] = (int *)malloc(sizeof(int) *
 		(env->path_idmax + 1))))
 			return (FAILURE);
 		i++;
@@ -125,6 +125,6 @@ int					set_answer_matrice(t_env *env)
 	// printf("full dns commence\n");
 	full_dns(env);
 	// printf("full dns termine\n");
-	printmatrice2(env);
+	// printmatrice2(env);
 	return (SUCCESS);
 }

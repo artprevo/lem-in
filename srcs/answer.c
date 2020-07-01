@@ -6,43 +6,59 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 14:29:53 by artprevo          #+#    #+#             */
-/*   Updated: 2020/01/07 14:29:56 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/07/01 20:03:41 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-int				make_answer(t_env *env)
+static int				*dupliq(int *tab, int size)
 {
-	t_answer	*answer;
-	t_pth		*pth;
-	t_path		
+	int i;
+	int *new;
 
-	if (!(answer = create_answer(env)))
-		return (FAILURE);
-	matrice = env->answer_matrice;
-	answer->nb_path = k + 1;
-	if (!(answer->path = add_path(env, matrice, k, i)))
-		return (FAILURE);
-	// printanswer(env);
+	if (!(new =(int*)malloc(sizeof(int) * size)))
+		return (NULL);
 	i = 0;
-	while (i < answer->nb_path)
+	while (i < size)
 	{
-		path = env->path;
-		while (path->id != answer->path[i])
-			path = path->next;
-		answer->steps += path->steps;
+		new[i] = tab[i];
 		i++;
 	}
-	return (SUCCESS);
+	i = 0;
+	while (i < size)
+	{
+		printf("tab[i] = %d\n", new[i]);
+		i++;
+	}
+	return (new);
+}
+
+t_answer		*make_answer(t_env *env)
+{
+	t_answer	*answer;
+
+	if (!(answer = create_answer(env)))
+		return (NULL);
+	printf("size = %d || steps = %d\n", env->result_size, env->steps);
+	answer->nb_path = env->result_size;
+	answer->path = dupliq(env->result, env->result_size);
+	answer->steps = env->steps;
+	int i = 0;
+	while (i < answer->nb_path)
+	{
+		printf("tab[i] = %d\n", answer->path[i]);
+		i++;
+	}
+	return (answer);
 }
 
 static int		explore_answer_matrice(t_env *env)
 {
-	size_t		**matrice;
-	size_t		i;
-	size_t		j;
-	size_t		k;
+	int		**matrice;
+	int		i;
+	int		j;
+	int		k;
 
 	matrice = env->answer_matrice;
 	i = 0;
@@ -63,16 +79,15 @@ static int		explore_answer_matrice(t_env *env)
 		}
 		i++;
 	}
-	exit(1);
 	return (SUCCESS);
 }
 
 static void		find_nb_path(t_env *env)
 {
-	size_t		i;
-	size_t		j;
-	size_t		nb_paths_used;
-	size_t		**matrice;
+	int		i;
+	int		j;
+	int		nb_paths_used;
+	int		**matrice;
 
 	matrice = env->matrice;
 	nb_paths_used = 0;
@@ -92,21 +107,17 @@ static void		find_nb_path(t_env *env)
 			nb_paths_used++;
 		j++;
 	}
-	// printf("nb_paths_usable = %zu || i = %zu\n", nb_paths_used, i);
+	// printf("nb_paths_usable = %d || i = %d\n", nb_paths_used, i);
 	env->nb_paths_used = (i <= nb_paths_used ? i : nb_paths_used);
 }
 
 static	void	set_resolution(t_env *env)
 {
 	t_path		*tmp;
-	t_answer	*answer;
-
+		
 	tmp = find_best_path(env);
-	if (env->answer)
-	{
-		answer = find_best_answer(env);
-		reso_calcul(env, tmp, answer);
-	}
+	if (env->score)
+		reso_calcul(env, tmp, env->answer);
 	else
 	{
 		env->resolution = STRAIGHT;
@@ -116,6 +127,8 @@ static	void	set_resolution(t_env *env)
 
 int				find_turns(t_env *env)
 {
+	t_answer	*answer;
+
 	find_nb_path(env);
 	put_id_path(env);
 	if (!env->path)
@@ -124,8 +137,11 @@ int				find_turns(t_env *env)
 		return (FAILURE);
 	if (explore_answer_matrice(env) == FAILURE)
 		return (FAILURE);
-	if (make_answer(env) == FAILURE)
-		return (FAILURE);
+	// if (make_answer(env) == FAILURE)
+	// 	return (FAILURE);
+	if (env->score)
+		env->answer = make_answer(env);
 	set_resolution(env);
+	// exit(1);
 	return (SUCCESS);
 }

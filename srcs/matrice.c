@@ -12,10 +12,10 @@
 
 #include "lemin.h"
 
-size_t		did_not_pass(t_env *env, size_t *line)
+int		did_not_pass(t_env *env, int *line)
 {
-	size_t i;
-	size_t k;
+	int i;
+	int k;
 
 	i = 0;
 	k = 0;
@@ -30,10 +30,10 @@ size_t		did_not_pass(t_env *env, size_t *line)
 	return (TRUE);
 }
 
-int			fill_ways(t_env *env, t_path *path, size_t **matrice, size_t steps)
+int			fill_ways(t_env *env, t_path *path, int **matrice, int steps)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	j;
 
 	if (!(create_ways(path, 0)))
 		return (FAILURE);
@@ -62,7 +62,7 @@ int			fill_ways(t_env *env, t_path *path, size_t **matrice, size_t steps)
 int			make_path(t_env *env)
 {
 	t_path	*path;
-	size_t	**matrice;
+	int	**matrice;
 
 	if (!(path = create_path(env)))
 		return (FAILURE);
@@ -72,9 +72,9 @@ int			make_path(t_env *env)
 	return (SUCCESS);
 }
 
-size_t		recursive(t_env *env, size_t **matrice, size_t i)
+int		recursive(t_env *env, int **matrice, int i)
 {
-	size_t	k;
+	int	k;
 
 	k = 0;
 	while (k != env->idmax)
@@ -91,17 +91,17 @@ size_t		recursive(t_env *env, size_t **matrice, size_t i)
 
 int			set_matrice(t_env *env)
 {
-	size_t	**matrice;
-	size_t	i;
+	int	**matrice;
+	int	i;
 	t_pipe	*pipe;
 
 	printf("Timer = %llu ms, %s\n", g_timer, "Start set_matrice");
-	if (!(matrice = (size_t **)malloc(sizeof(size_t *) * (env->idmax + 1))))
+	if (!(matrice = (int **)malloc(sizeof(int *) * (env->idmax + 1))))
 		return (FAILURE);
 	i = 0;
 	while (i < env->idmax + 1)
 	{
-		if (!(matrice[i] = (size_t *)malloc(sizeof(size_t) * (env->idmax + 1))))
+		if (!(matrice[i] = (int *)malloc(sizeof(int) * (env->idmax + 1))))
 			return (FAILURE);
 		i++;
 	}

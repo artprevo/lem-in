@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-t_ways				*initways(size_t id)
+t_ways				*initways(int id)
 {
 	t_ways	*new;
 
@@ -32,6 +32,7 @@ t_path				*initpath(void)
 		return (NULL);
 	new->ways = NULL;
 	new->next = NULL;
+	new->idbis = 0;
 	new->turns = 0;
 	return (new);
 }
@@ -50,7 +51,7 @@ t_answer			*initanswer(void)
 	return (new);
 }
 
-t_ants				*initants(t_path *path, size_t id)
+t_ants				*initants(t_path *path, int id)
 {
 	t_ants	*new;
 

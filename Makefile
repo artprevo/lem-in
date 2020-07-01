@@ -6,7 +6,7 @@
 #    By: artprevo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/18 18:16:55 by artprevo          #+#    #+#              #
-#    Updated: 2019/10/29 15:44:13 by artprevo         ###   ########.fr        #
+#    Updated: 2020/07/01 19:41:29 by artprevo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ CC = clang
 CFLAGS = -Wall -Wextra -fsanitize=address
 SRCS = main.c init.c init_tools.c parsing.c freeall.c utility.c \
 setup_id.c matrice.c answer.c answermatrice.c result.c init2.c init_tools2.c \
-matrice2.c result2.c error.c parsing2.c freeall2.c print.c algo_multipath2.c \
-comb.c
+matrice2.c result2.c error.c parsing2.c freeall2.c print.c \
+comb.c comb_tools.c
 OBJS_PATH = objs/
 SRCS_PATH = srcs/
 OBJS = $(patsubst %.c, $(OBJS_PATH)%.o, $(SRCS))

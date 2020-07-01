@@ -36,7 +36,7 @@ t_answer			*create_answer(t_env *env)
 	return (new);
 }
 
-t_ants				*create_ants(t_env *env, t_path *path, size_t id)
+t_ants				*create_ants(t_env *env, t_path *path, int id)
 {
 	t_ants	*new;
 	t_ants	*tmp;

@@ -12,10 +12,10 @@
 
 #include "lemin.h"
 
-static void	clean_matrice(t_env *env, size_t **matrice)
+static void	clean_matrice(t_env *env, int **matrice)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i <= env->idmax)
@@ -34,8 +34,8 @@ static void	clean_matrice(t_env *env, size_t **matrice)
 
 void		okazou(t_env *env)
 {
-	size_t	**matrice;
-	size_t	j;
+	int	**matrice;
+	int	j;
 
 	clean_matrice(env, env->matrice);
 	matrice = env->matrice;
@@ -59,7 +59,7 @@ void		okazou(t_env *env)
 	clean_matrice(env, env->matrice);
 }
 
-static int	scout_matrice(t_env *env, size_t **matrice, size_t *i, size_t *j)
+static int	scout_matrice(t_env *env, int **matrice, int *i, int *j)
 {
 	matrice[*i][*j] = 2;
 	if (*j == env->idmax)
@@ -78,9 +78,9 @@ static int	scout_matrice(t_env *env, size_t **matrice, size_t *i, size_t *j)
 	return (SUCCESS);
 }
 
-int			explore_matrice(t_env *env, size_t i, size_t j, size_t **matrice)
+int			explore_matrice(t_env *env, int i, int j, int **matrice)
 {
-	size_t	z;
+	int	z;
 
 	z = 0;
 	printf("Timer = %llu ms, %s\n", g_timer, "Algo_start");

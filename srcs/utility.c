@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 14:31:01 by artprevo          #+#    #+#             */
-/*   Updated: 2020/01/07 14:31:02 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/07/01 20:08:09 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ t_answer	*find_best_answer(t_env *env)
 {
 	t_answer	*answer;
 	t_answer	*best;
-	size_t		score;
-	size_t		score2;
+	int		score;
+	int		score2;
 
 	answer = env->answer;
 	score = ((answer->steps / answer->nb_path) +
@@ -41,22 +41,24 @@ t_answer	*find_best_answer(t_env *env)
 // delete de env->ants % answer->nb_path car ca faisait un faux resultat;
 void		reso_calcul(t_env *env, t_path *tmp, t_answer *answer)
 {
-	// printf("steps du straight = %zu\n", tmp->steps + env->ants);
-	// printf("steps de l'answer = %zu \n", (((answer->steps / answer->nb_path) +
-	// (answer->steps % answer->nb_path)) +
-	// (env->ants / answer->nb_path)));
-	// printf("steps / path = %zu\n", ((answer->steps / answer->nb_path) +
-	// (answer->steps % answer->nb_path)));
-	// printf("ants / nb_path = %zu\n", (env->ants / answer->nb_path));
+// 	printf("steps du straight = %d\n", tmp->steps + env->ants);
+// 	printf("steps de l'answer = %d \n", (((answer->steps / answer->nb_path) +
+// 	(answer->steps % answer->nb_path)) +
+// 	(env->ants / answer->nb_path)));
+// 	printf("steps / path = %d\n", ((answer->steps / answer->nb_path) +
+// 	(answer->steps % answer->nb_path)));
+// 	printf("ants / nb_path = %d\n", (env->ants / answer->nb_path));
 	if ((tmp->steps + env->ants) < (((answer->steps / answer->nb_path) +
 	(answer->steps % answer->nb_path)) + (env->ants / answer->nb_path)))
 	{
+		printf("straight\n");
 		env->steps = (tmp->steps + env->ants);
 		env->nb_paths_used = 1;
 		env->resolution = STRAIGHT;
 	}
 	else
 	{
+		printf("multi\n");
 		env->steps = (((answer->steps / answer->nb_path) +
 		(answer->steps % answer->nb_path)) + (env->ants / answer->nb_path)
 	+ env->ants % answer->nb_path);
@@ -66,26 +68,22 @@ void		reso_calcul(t_env *env, t_path *tmp, t_answer *answer)
 	}
 }
 
-size_t		*add_path(t_env *env, size_t **matrice, size_t k, size_t i)
+int		*add_path(t_env *env, t_pth *tab)
 {
-	size_t		j;
-	size_t		*paths;
+	int		j;
+	int		i;
+	int		*paths;
 
-	if (!(paths = (size_t *)malloc(sizeof(size_t) * (k + 1))))
+	if (!(paths = (int *)malloc(sizeof(int) * (tab->size))))
 		return (NULL);
-	// printf("taille malloc = %zu\n", k + 1);
+	// printf("taille malloc = %d\n", k + 1);
 	j = 0;
-	k = 0;
-	paths[0] = i;
-	// printmatrice2(env);
-	// printf("i = %zu || j = %zu || k = %zu\n", i, j, k);
-	while (j <= env->path_idmax)
+	i = 0;
+	while (i < tab->size)
 	{
-		if (matrice[i][j] == 2)
-			paths[++k] = j;
-		// printf("paths[k] = %zu || k = %zu\n", paths[k], k);
-		// printf("i = %zu || j = %zu || k = %zu\n", i, j, k);
+		paths[j] = tab->path[i];
 		j++;
+		i++;
 	}
 	return (paths);
 }

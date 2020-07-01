@@ -8,19 +8,12 @@ static void	print_int_tab(int *tab, int len, char *str)
 	printf("%s", str);
 	while (i < len)
 	{
-		printf("%d", tab[i]);
+		printf("%d ", tab[i]);
 		i++;
 	}
 	printf("\n");
 }
 
-// void	print_tab(int *tab, int size)
-// {
-// 	for (int i = 0; i < size; i++)
-// 		printf("%d", tab[i]);
-// 	printf("\n");
-// }
-//
 static void	print_path_list(t_pth *pth)
 {
 	while (pth)
@@ -30,6 +23,67 @@ static void	print_path_list(t_pth *pth)
 			printf("[%d]", pth->size);
 			print_int_tab(pth->path, pth->size, " ");
 		}
+		pth = pth->next;
+	}
+}
+
+static int				*dupliq(int *tab, int size)
+{
+	int i;
+	int *new;
+
+	if (!(new =(int*)malloc(sizeof(int) * size)))
+		return (FAILURE);
+	i = 0;
+	while (i < size)
+	{
+		new[i] = tab[i];
+		i++;
+	}
+	return (new);
+}
+
+static int				make_answer2(t_env *env, t_pth *tab)
+{
+	t_path		*path;
+	int			i;
+	int			steps;
+	int		score;
+
+	i = 0;
+	steps = 0;
+	while (i < tab->size)
+	{
+		path = env->path;
+		while (path->id != tab->path[i])
+			path = path->next;
+		steps += path->steps;
+		i++;
+	}
+	score = ((steps / tab->size) + (steps % tab->size) + (env->ants / tab->size) + (env->ants % tab->size));
+	if (score <= env->score || env->score == 0)
+	{
+		if (!(env->result = dupliq(tab->path, tab->size)))
+			return (FAILURE);
+		env->score = score;
+		env->result_size = tab->size;
+		env->steps = steps;
+	}
+	// {
+	// 	if (!(answer = create_answer(env)))
+	// 		return (FAILURE);
+	// 	if (!(answer->path = add_path(env, tab)))
+	// 		return (FAILURE);
+	// 	answer->nb_path = tab->size;
+	// }
+}
+
+static void	make_answer_list(t_env *env, t_pth *pth)
+{
+	while (pth)
+	{
+		if (pth->size != 0)
+			make_answer2(env, pth);
 		pth = pth->next;
 	}
 }
@@ -143,65 +197,7 @@ static t_pth		*create_possibility_tree(int *tab, int range, t_pth *pth)
 	return (pth);
 }
 
-static void 		setup_idbis(t_env *env, size_t i)
-{
-	size_t		**matrice;
-	t_path		*path;
-	size_t		j;
-	size_t		id;
-
-	matrice = env->answer_matrice;
-	j = 0;
-	id = 0;
-	path = find_path(i, env);
-	path->idbis = id;
-	while (j <= env->path_idmax)
-	{
-		if (matrice[i][j] == 1)
-		{
-			path = find_path(j, env);
-			path->idbis = ++id;
-		}
-		j++;
-	}
-}
-
-static t_path				*find_path2(size_t i, t_env *env)
-{
-	t_path	*path;
-
-	path = env->path;
-	while (path)
-	{
-		if (path->idbis == i)
-			return (path);
-		path = path->next;
-	}
-	return (path);
-}
-
-static void 		swap_id(t_env *env, t_pth *pth)
-{
-	t_path	*path;
-	size_t	i;
-
-	while (pth)
-	{
-		printf("slt\n");
-		if (pth->size == 1)
-			pth->size = 0;
-		i = 0;
-		while (i < pth->size)
-		{
-			path = find_path2(pth->path[i], env);
-			pth->path[i] = path->id;
-			i++;
-		}
-		pth = pth->next;
-	}
-}
-
-int		store_paths(t_env *env, int range, size_t i)
+int		store_paths(t_env *env, int range, int i)
 {
 	int		*tab;
 	t_pth	*pth;
@@ -214,19 +210,9 @@ int		store_paths(t_env *env, int range, size_t i)
 	free(tab);
 	setup_idbis(env, i);
 	swap_id(env, pth);
-	env->pth = pth;
-	print_path_list(pth);
-
-	// a plus besoin list on free
+	make_answer_list(env, pth);
+	// print_path_list(pth);
+	// exit (0);
 	// free_pth_tree(pth);
 	return (0);
 }
-
-// int		main(int argc, char **argv)
-// {
-// 	int		range = 10;
-//
-// 	if (store_paths(range) != 0)
-// 		return (1);
-// 	return (0);
-// }

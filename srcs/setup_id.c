@@ -15,7 +15,7 @@
 void			put_id_path(t_env *env)
 {
 	t_path	*path;
-	size_t	i;
+	int	i;
 
 	i = 0;
 	path = env->path;

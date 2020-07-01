@@ -76,8 +76,8 @@ static	void	freeroom(t_env *env)
 
 static	void	freematrice(t_env *env)
 {
-	size_t	i;
-	size_t	**matrice;
+	int	i;
+	int	**matrice;
 
 	if (env->matrice)
 	{

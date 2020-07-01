@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-t_ways		*mp_tool1(t_env *env, t_ways *ways, t_ants *ants, size_t space)
+t_ways		*mp_tool1(t_env *env, t_ways *ways, t_ants *ants, int space)
 {
 	ways->ants = 0;
 	ways = ways->next;
@@ -25,7 +25,7 @@ t_ways		*mp_tool1(t_env *env, t_ways *ways, t_ants *ants, size_t space)
 	return (ways);
 }
 
-t_ways		*mp_tool2(t_env *env, t_ways *ways, t_ants *ants, size_t space)
+t_ways		*mp_tool2(t_env *env, t_ways *ways, t_ants *ants, int space)
 {
 	ways = ways->next;
 	if (space != 0)
@@ -56,7 +56,7 @@ void		mp_tool4(t_env *env)
 		ft_putchar('\n');
 }
 
-t_ants		*mp_tool5(t_env *env, size_t *i, size_t *space)
+t_ants		*mp_tool5(t_env *env, int *i, int *space)
 {
 	t_ants	*ants;
 

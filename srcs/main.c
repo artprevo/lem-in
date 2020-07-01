@@ -6,7 +6,7 @@
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 14:30:26 by artprevo          #+#    #+#             */
-/*   Updated: 2020/01/13 21:21:22 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/07/01 20:02:10 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int					processparsing(t_env *env)
 {
 	char	*line;
-	size_t	i;
+	int	i;
 
 	i = 0;
 	line = NULL;
@@ -84,9 +84,9 @@ int					main(void)
 		else if (processtreatment(env) == FAILURE)
 			ft_putstr("ERROR\n");
 	}
-	printf("env->steps = %zu\n", env->steps);
-	printpath(env);
-	printanswer(env);
+//	printf("env->steps = %d\n", env->steps);
+//	printpath(env);
+	// printanswer(env);
 	// printroom(env);
 	// printpipe(env);
 	// printmatrice(env);

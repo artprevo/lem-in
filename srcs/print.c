@@ -20,8 +20,8 @@ void        printroom(t_env *env)
 	while (room)
 	{
 	    printf("name = %s || ", room->name);
-		printf("id = %zu || ", room->id);
-	    printf("state = %zu\n\n", room->state);
+		printf("id = %d || ", room->id);
+	    printf("state = %d\n\n", room->state);
 		room = room->next;
 	}
 }
@@ -33,24 +33,24 @@ void        printpipe(t_env *env)
 	pipe = env->pipe;
 	while (pipe)
 	{
-		printf("ida = %zu\n", pipe->ida);
-		printf("idb = %zu\n", pipe->idb);
+		printf("ida = %d\n", pipe->ida);
+		printf("idb = %d\n", pipe->idb);
 		pipe = pipe->next;
 	}
 }
 
 void 		printmatrice(t_env *env)
 {
-	size_t		i;
-	size_t		j;
-	size_t		**matrice;
+	int		i;
+	int		j;
+	int		**matrice;
 
 	i = 0;
 	matrice = env->matrice;
 	printf("  ");
 	while (i <= env->idmax)
 	{
-		printf("%zu", i);
+		printf("%d", i);
 		i++;
 	}
 	i = 0;
@@ -59,12 +59,12 @@ void 		printmatrice(t_env *env)
 	while (i <= env->idmax)
 	{
 		j = 0;
-		printf("%zu ", i);
+		printf("%d ", i);
 		while (j <= env->idmax)
 		{
 			if (matrice[i][j] != 1 && matrice[i][j] != 2 && matrice[i][j] != 3)
 				matrice[i][j] = 0;
-			printf("%zu", matrice[i][j]);
+			printf("%d", matrice[i][j]);
 			j++;
 		}
 		printf("\n");
@@ -74,16 +74,16 @@ void 		printmatrice(t_env *env)
 
 void 		printmatrice2(t_env *env)
 {
-	size_t		i;
-	size_t		j;
-	size_t		**matrice;
+	int		i;
+	int		j;
+	int		**matrice;
 
 	i = 0;
 	matrice = env->answer_matrice;
 	printf("  ");
 	while (i <= env->path_idmax)
 	{
-		printf("%zu", i);
+		printf("%d", i);
 		i++;
 	}
 	i = 0;
@@ -92,12 +92,12 @@ void 		printmatrice2(t_env *env)
 	while (i <= env->path_idmax)
 	{
 		j = 0;
-		printf("%zu ", i);
+		printf("%d ", i);
 		while (j <= env->path_idmax)
 		{
 			if (matrice[i][j] != 1 && matrice[i][j] != 2 && matrice[i][j] != 3)
 				matrice[i][j] = 0;
-			printf("%zu", matrice[i][j]);
+			printf("%d", matrice[i][j]);
 			j++;
 		}
 		printf("\n");
@@ -117,11 +117,11 @@ void 		printpath(t_env *env)
 		ways = path->ways;
 		while (ways)
 		{
-			printf("%zu || ", ways->id);
+			printf("%d || ", ways->id);
 			ways = ways->next;
 		}
-
-		printf("id = %zu || steps = %zu\n", path->id, path->steps);
+		printf("\nidbis = %d\n", path->idbis);
+		printf("id = %d || steps = %d\n", path->id, path->steps);
 		path = path->next;
 	}
 }
@@ -129,21 +129,21 @@ void 		printpath(t_env *env)
 void 		printanswer(t_env *env)
 {
 	t_answer	*answer;
-	size_t		i;
-	size_t		score;
+	int		i;
+	int		score;
 
 	answer = env->answer;
 	while (answer)
 	{
 		i = 0;
 		while (i < answer->nb_path)
-			printf("path = %zu ||", answer->path[i++]);
+			printf("path = %d ||", answer->path[i++]);
 		// printf("\n");
-		printf(" answer->steps = %zu || answer->nb_path = %zu\n", answer->steps, answer->nb_path);
+		printf(" answer->steps = %d || answer->nb_path = %d\n", answer->steps, answer->nb_path);
 		score = ((answer->steps / answer->nb_path) +
 		(answer->steps % answer->nb_path) + (env->ants / answer->nb_path) +
 		(env->ants % answer->nb_path));
-		// printf("score = %zu\n\n", score);
+		// printf("score = %d\n\n", score);
 		answer = answer->next;
 	}
 }
