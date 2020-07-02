@@ -127,8 +127,6 @@ static	void	set_resolution(t_env *env)
 
 int				find_turns(t_env *env)
 {
-	t_answer	*answer;
-
 	find_nb_path(env);
 	put_id_path(env);
 	if (!env->path)
@@ -137,11 +135,8 @@ int				find_turns(t_env *env)
 		return (FAILURE);
 	if (explore_answer_matrice(env) == FAILURE)
 		return (FAILURE);
-	// if (make_answer(env) == FAILURE)
-	// 	return (FAILURE);
 	if (env->score)
 		env->answer = make_answer(env);
 	set_resolution(env);
-	// exit(1);
 	return (SUCCESS);
 }

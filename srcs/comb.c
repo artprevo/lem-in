@@ -1,31 +1,31 @@
 #include "lemin.h"
 
-static void	print_int_tab(int *tab, int len, char *str)
-{
-	int i = 0;
+// static void	print_int_tab(int *tab, int len, char *str)
+// {
+// 	int i = 0;
 
-	if (str)
-	printf("%s", str);
-	while (i < len)
-	{
-		printf("%d ", tab[i]);
-		i++;
-	}
-	printf("\n");
-}
+// 	if (str)
+// 	printf("%s", str);
+// 	while (i < len)
+// 	{
+// 		printf("%d ", tab[i]);
+// 		i++;
+// 	}
+// 	printf("\n");
+// }
 
-static void	print_path_list(t_pth *pth)
-{
-	while (pth)
-	{
-		if (pth->size != 0)
-		{
-			printf("[%d]", pth->size);
-			print_int_tab(pth->path, pth->size, " ");
-		}
-		pth = pth->next;
-	}
-}
+// static void	print_path_list(t_pth *pth)
+// {
+// 	while (pth)
+// 	{
+// 		if (pth->size != 0)
+// 		{
+// 			printf("[%d]", pth->size);
+// 			print_int_tab(pth->path, pth->size, " ");
+// 		}
+// 		pth = pth->next;
+// 	}
+// }
 
 static int				*dupliq(int *tab, int size)
 {
@@ -33,7 +33,7 @@ static int				*dupliq(int *tab, int size)
 	int *new;
 
 	if (!(new =(int*)malloc(sizeof(int) * size)))
-		return (FAILURE);
+		return (NULL);
 	i = 0;
 	while (i < size)
 	{
@@ -69,13 +69,7 @@ static int				make_answer2(t_env *env, t_pth *tab)
 		env->result_size = tab->size;
 		env->steps = steps;
 	}
-	// {
-	// 	if (!(answer = create_answer(env)))
-	// 		return (FAILURE);
-	// 	if (!(answer->path = add_path(env, tab)))
-	// 		return (FAILURE);
-	// 	answer->nb_path = tab->size;
-	// }
+	return (SUCCESS);
 }
 
 static void	make_answer_list(t_env *env, t_pth *pth)
@@ -163,26 +157,27 @@ static t_pth		*create_sons(t_num *num, int range, int max_son, t_pth *pth)
 	return (pth);
 }
 
-static void		free_pth_tree(t_pth *pth)
-{
-	t_pth	*tmp;
+// static void		free_pth_tree(t_pth *pth)
+// {
+// 	t_pth	*tmp;
 
-	while (pth)
-	{
-		tmp = pth->next;
-		free(pth->path);
-		free(pth->ptr->sons);
-		free(pth->ptr);
-		free(pth);
+// 	while (pth)
+// 	{
+// 		tmp = pth->next;
+// 		free(pth->path);
+// 		free(pth->ptr->sons);
+// 		free(pth->ptr);
+// 		free(pth);
 
-		pth = tmp;
-	}
-}
+// 		pth = tmp;
+// 	}
+// }
 
 static t_pth		*create_possibility_tree(int *tab, int range, t_pth *pth)
 {
 	t_num	*num;
 
+	tab = 0;
 	range++;
 	if (!(num = malloc(sizeof(*num))))
 		return (0);
